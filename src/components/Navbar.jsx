@@ -18,7 +18,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-white border-b border-gray-100 px-4 md:px-12 flex items-center justify-between shadow-sm sticky top-0 z-50">
+    <nav className="bg-[#fae1d570] border-b border-gray-100 px-4 md:px-12 flex items-center justify-between sticky top-0 z-50">
       {/* Left side er Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
