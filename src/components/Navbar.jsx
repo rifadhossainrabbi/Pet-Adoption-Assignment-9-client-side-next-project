@@ -18,7 +18,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-[#fae1d570] border-b border-gray-100 px-4 md:px-12 flex items-center justify-between sticky top-0 z-50">
+    <nav className="bg-[#fae1d570] border-b border-gray-100 px-4 md:px-12 flex items-center justify-between sticky top-0 z-50 container mx-auto">
       {/* Left side er Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
@@ -92,7 +92,7 @@ const Navbar = () => {
         {isOpen && (
           <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-100 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in duration-200">
             <Link
-              href="/profile"
+              href="/dashboard"
               className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#FF7043] transition-colors"
             >
               Dashboard
