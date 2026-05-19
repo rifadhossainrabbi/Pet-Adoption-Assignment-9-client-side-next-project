@@ -117,7 +117,7 @@ const Navbar = () => {
               <div className="my-1 border-t border-gray-100"></div>
               <button
                 className="w-full text-left block px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 font-medium transition-colors"
-                onClick={() => console.log('Logout clicked')}
+                onClick={async () => authClient.signOut()}
               >
                 Logout
               </button>

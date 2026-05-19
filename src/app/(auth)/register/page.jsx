@@ -11,30 +11,40 @@ import { authClient } from '@/lib/auth-client';
 const RegisterPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [isShowPassword, setIsShowPassword] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
+  const password = watch('password');
+
   const handleRegisterFunc = async data => {
-    console.log(data);
-    const { name, email, password, image } = data;
+    setLoading(true);
+    try {
+      const { name, email, password, image } = data;
+      const { data: res, error } = await authClient.signUp.email({
+        name,
+        email,
+        password,
+        image,
+      });
 
-    const { data: res, error } = await authClient.signUp.email({
-      name,
-      email,
-      password,
-      image,
-    });
-
-    if (error) {
-      toast.error(error.message || 'Registration failed!');
-    } else {
-      toast.success('Registration successful!');
-      router.push('/login');
+      if (error) {
+        toast.error(error.message || 'Registration failed!');
+      } else {
+        toast.success('Registration successful!');
+        router.push('/login');
+      }
+    } catch (err) {
+      toast.error('An unexpected error occurred');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,11 +77,7 @@ const RegisterPage = () => {
             </label>
             <input
               type="text"
-              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
-                errors.name
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-              }`}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${errors.name ? 'border-red-500 bg-red-50' : 'border-gray-200 focus:border-amber-500'}`}
               placeholder="John Doe"
               {...register('name', { required: 'Name is required' })}
             />
@@ -89,11 +95,7 @@ const RegisterPage = () => {
             </label>
             <input
               type="email"
-              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
-                errors.email
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-              }`}
+              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${errors.email ? 'border-red-500 bg-red-50' : 'border-gray-200 focus:border-amber-500'}`}
               placeholder="name@example.com"
               {...register('email', { required: 'Email is required' })}
             />
@@ -111,7 +113,7 @@ const RegisterPage = () => {
             </label>
             <input
               type="text"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-amber-500 transition-all"
               placeholder="https://image-link.com"
               {...register('image')}
             />
@@ -124,31 +126,32 @@ const RegisterPage = () => {
             </label>
             <div className="relative">
               <input
-                type={isShowPassword ? 'text' : 'password'}
-                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
-                  errors.password
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
-                }`}
-                placeholder="••••••••"
+                type={showPassword ? 'text' : 'password'}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${errors.password ? 'border-red-500 bg-red-50' : 'border-gray-200 focus:border-amber-500'}`}
+                placeholder="Enter Password..."
                 {...register('password', {
                   required: 'Password is required',
                   minLength: {
                     value: 6,
                     message: 'Must be at least 6 characters',
                   },
+                  validate: value => {
+                    if (
+                      value === value.toLowerCase() ||
+                      value === value.toUpperCase()
+                    ) {
+                      return 'Must contain at least one uppercase and one lowercase letter';
+                    }
+                    return true;
+                  },
                 })}
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-600 transition-colors"
-                onClick={() => setIsShowPassword(!isShowPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-600"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                {isShowPassword ? (
-                  <FaEyeSlash size={20} />
-                ) : (
-                  <FaEye size={20} />
-                )}
+                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
               </button>
             </div>
             {errors.password && (
@@ -158,17 +161,49 @@ const RegisterPage = () => {
             )}
           </div>
 
+          {/* Confirm Password Field */}
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-bold text-gray-700 ml-1">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirmPassword ? 'text' : 'password'}
+                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-gray-200 focus:border-amber-500'}`}
+                placeholder="Retype Password..."
+                {...register('confirmPassword', {
+                  required: 'Confirm Password is required',
+                  validate: value =>
+                    value === password || 'Passwords do not match',
+                })}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-600"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <FaEyeSlash size={20} />
+                ) : (
+                  <FaEye size={20} />
+                )}
+              </button>
+            </div>
+            {errors.confirmPassword && (
+              <span className="text-red-500 text-xs ml-1">
+                {errors.confirmPassword.message}
+              </span>
+            )}
+          </div>
+
           {/* Register Button */}
           <button
             disabled={loading}
-            className={`w-full py-3.5 rounded-xl text-white font-bold text-lg shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2 ${
-              loading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-amber-200'
-            }`}
+            type="submit"
+            className={`w-full py-3.5 rounded-xl text-white font-bold text-lg shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 mt-2 ${loading ? 'bg-gray-400' : 'bg-gradient-to-r from-amber-500 to-orange-600'}`}
           >
             {loading ? (
-              <span className="loading loading-spinner loading-sm"></span>
+              <span className="">Creating account...</span>
             ) : (
               'Create Account'
             )}

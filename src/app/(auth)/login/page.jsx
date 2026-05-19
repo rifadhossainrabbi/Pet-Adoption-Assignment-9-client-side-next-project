@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client'; // আপনার লিভ ফোল্ডার থেকে পাথ ঠিক করে নিন
 import { useRouter } from 'next/navigation';
+import { PulseLoader } from 'react-spinners';
 
 const LogInPage = () => {
   const router = useRouter();
@@ -123,16 +124,6 @@ const LogInPage = () => {
             )}
           </div>
 
-          {/* Forgot Password Link */}
-          <div className="flex justify-end">
-            <Link
-              href="#"
-              className="text-xs font-semibold text-amber-600 hover:underline"
-            >
-              Forgot password?
-            </Link>
-          </div>
-
           {/* Login Button */}
           <button
             disabled={loading}
@@ -142,11 +133,7 @@ const LogInPage = () => {
                 : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-amber-200'
             }`}
           >
-            {loading ? (
-              <span className="loading loading-spinner loading-sm"></span>
-            ) : (
-              'Sign In'
-            )}
+            {loading ? <PulseLoader /> : 'Sign In'}
           </button>
         </form>
 
