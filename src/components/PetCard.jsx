@@ -55,17 +55,31 @@ const PetCard = ({ pet }) => {
           </div>
         </div>
       </div>
-      <div className="p-4 pt-0">
-        <Link href={`/all-pets/${pet._id}`}>
-          <Button
-            fullWidth
-            variant="flat"
-            color="warning"
-            className="font-bold text-white bg-orange-400 hover:bg-orange-600 hover:text-white transition-colors duration-300"
-          >
-            View Details
-          </Button>
-        </Link>
+      <div className="p-4 pt-0 flex justify-between">
+        <div>
+          <Link href={`/all-pets/${pet._id}`}>
+            <Button
+              fullWidth
+              variant="flat"
+              color="warning"
+              className="font-bold text-white bg-orange-400 hover:bg-orange-600 hover:text-white transition-colors duration-300"
+            >
+              View Details
+            </Button>
+          </Link>
+        </div>
+        <div>
+          <Link href={`/all-pets/${pet._id}`}>
+            <Button
+              fullWidth
+              variant="flat"
+              color="warning"
+              className="font-bold text-white bg-orange-400 hover:bg-orange-600 hover:text-white transition-colors duration-300"
+            >
+              Adopt pet
+            </Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

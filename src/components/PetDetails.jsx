@@ -23,7 +23,7 @@ const PetDetails = ({ singlePet }) => {
       <div className="flex flex-col md:flex-row gap-12 items-start">
         {/* left side pet image */}
         <div className="w-full md:w-[45%]">
-          <div className="relative aspect-[4/5] w-full rounded-3xl overflow-hidden shadow-sm">
+          <div className="relative aspect-[5/5] w-full rounded-3xl overflow-hidden shadow-sm">
             <Image
               src={imageUrl}
               alt={PetName}
