@@ -109,7 +109,7 @@ const Navbar = () => {
           {isOpen && (
             <div className="absolute right-0 mt-3 w-48 bg-white border border-gray-100 rounded-xl shadow-2xl py-2 z-50 animate-in fade-in zoom-in duration-200">
               <Link
-                href="/dashboard"
+                href="/my-requests"
                 className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-orange-50 hover:text-[#FF7043] transition-colors"
               >
                 Dashboard
