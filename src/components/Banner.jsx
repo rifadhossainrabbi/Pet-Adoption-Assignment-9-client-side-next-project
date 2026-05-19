@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const Banner = () => {
   return (
-    <section className="relative w-full min-h-[400px] lg:h-[600px] flex items-center overflow-hidden bg-[#FFF9F8]">
+    <section className="relative container mx-auto min-h-[400px] lg:h-[600px] flex items-center overflow-hidden bg-[#FFF9F8]">
       {/* Background Image Layer */}
       <div className="absolute inset-0 z-0">
         <Image

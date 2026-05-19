@@ -14,7 +14,7 @@ import Image from 'next/image';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a192f] text-gray-300 py-12 px-6 md:px-16 relative overflow-hidden">
+    <footer className="bg-[#0a192f] text-gray-300 py-12 px-6 md:px-16 relative overflow-hidden container mx-auto">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Brand Info */}
         <div className="space-y-4">
