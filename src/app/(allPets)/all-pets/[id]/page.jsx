@@ -1,3 +1,4 @@
+import PetDetails from '@/components/PetDetails';
 import React from 'react';
 
 const PetDetailsById = async ({ params }) => {
@@ -7,7 +8,11 @@ const PetDetailsById = async ({ params }) => {
   const singlePet = await res.json();
   console.log(singlePet);
 
-  return <div></div>;
+  return (
+    <div>
+      <PetDetails singlePet={singlePet} />
+    </div>
+  );
 };
 
 export default PetDetailsById;
