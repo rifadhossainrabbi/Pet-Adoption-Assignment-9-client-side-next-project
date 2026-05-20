@@ -1,4 +1,5 @@
 'use client';
+import { authClient } from '@/lib/auth-client';
 import {
   FieldError,
   Input,
@@ -16,6 +17,20 @@ import toast from 'react-hot-toast';
 
 const AddPetPage = () => {
   const [isPending, setIsPending] = useState(false);
+
+  const { data: session, isPending: isAuthLoading } = authClient.useSession();
+  const user = session?.user;
+
+  if (isAuthLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
+  if (!user) {
+    return <div className="text-center py-20">Please login to add a pet.</div>;
+  }
 
   const onSubmit = async e => {
     e.preventDefault();
@@ -123,29 +138,29 @@ const AddPetPage = () => {
           </TextField>
 
           {/* Gender */}
-                    <div className="flex flex-col gap-3">
-                      <Label className="font-bold text-gray-700">Gender</Label>
-                      <div className="flex gap-8 items-center h-10">
-                        <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="male"
-                            className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
-                          />
-                          <span>Male</span>
-                        </label>
-                        <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="female"
-                            className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
-                          />
-                          <span>Female</span>
-                        </label>
-                      </div>
-                    </div>
+          <div className="flex flex-col gap-3">
+            <Label className="font-bold text-gray-700">Gender</Label>
+            <div className="flex gap-8 items-center h-10">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
+                />
+                <span>Male</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
+                />
+                <span>Female</span>
+              </label>
+            </div>
+          </div>
 
           {/* Image URL */}
           <TextField name="imageUrl" isRequired>
@@ -238,13 +253,15 @@ const AddPetPage = () => {
 
           {/* Owner Email (Auto-filled) */}
           <div className="md:col-span-2">
-            <TextField name="ownerEmail" isReadOnly>
-              <Label className="font-bold text-gray-700">
-                Owner Email (auto-filled)
+            <TextField isReadOnly defaultValue={user?.email}>
+              <Label className="font-bold text-gray-400">
+                Owner Email (Fixed)
               </Label>
               <Input
-                value="hossainmrrifad@gmail.com"
-                className="rounded-2xl bg-gray-50"
+                name="userEmail"
+                defaultValue={user?.email}
+                isReadOnly
+                className="rounded-2xl bg-gray-50 text-gray-400"
               />
             </TextField>
           </div>

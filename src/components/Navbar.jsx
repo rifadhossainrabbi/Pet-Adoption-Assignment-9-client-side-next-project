@@ -3,11 +3,15 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { authClient } from '@/lib/auth-client';
+import { usePathname, useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   console.log(session?.user);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -21,6 +25,17 @@ const Navbar = () => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const privateRoutes = ['/add-pet', '/my-list', '/my-requests'];
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.refresh();
+
+    if (privateRoutes.includes(pathname)) {
+      router.push('/login');
+    }
+  };
 
   return (
     <nav className="bg-[#fae1d570] border-b border-gray-100 px-4 md:px-12 flex items-center justify-between sticky top-0 z-50 container mx-auto">
@@ -117,7 +132,7 @@ const Navbar = () => {
               <div className="my-1 border-t border-gray-100"></div>
               <button
                 className="w-full text-left block px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 font-medium transition-colors"
-                onClick={async () => authClient.signOut()}
+                onClick={handleSignOut}
               >
                 Logout
               </button>
