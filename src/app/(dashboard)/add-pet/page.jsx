@@ -123,20 +123,29 @@ const AddPetPage = () => {
           </TextField>
 
           {/* Gender */}
-          <div className="flex flex-col gap-2">
-            <Label className="font-bold text-gray-700">Gender</Label>
-            <RadioGroup
-              name="gender"
-              orientation="horizontal"
-              color="warning"
-              defaultValue="male"
-            >
-              <div className="flex gap-6">
-                <Radio value="male">Male</Radio>
-                <Radio value="female">Female</Radio>
-              </div>
-            </RadioGroup>
-          </div>
+                    <div className="flex flex-col gap-3">
+                      <Label className="font-bold text-gray-700">Gender</Label>
+                      <div className="flex gap-8 items-center h-10">
+                        <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="male"
+                            className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
+                          />
+                          <span>Male</span>
+                        </label>
+                        <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="female"
+                            className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
+                          />
+                          <span>Female</span>
+                        </label>
+                      </div>
+                    </div>
 
           {/* Image URL */}
           <TextField name="imageUrl" isRequired>
