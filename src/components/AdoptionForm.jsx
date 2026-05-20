@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const AdoptionForm = ({ singlePet }) => {
-  const { PetName, _id, ownerEmail } = singlePet;
+  const { PetName, _id, ownerEmail, imageUrl } = singlePet;
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,6 +22,7 @@ const AdoptionForm = ({ singlePet }) => {
 
     const completeData = {
       petName: PetName,
+      petImage:imageUrl,
       clientName: user?.name,
       email: user?.email,
       image: user?.image || '',
