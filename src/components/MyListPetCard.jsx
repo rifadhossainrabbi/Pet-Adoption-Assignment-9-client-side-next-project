@@ -81,7 +81,7 @@ const MyListPetCard = ({ pet, clientRequests }) => {
           </button>
 
           <Link
-            href={`/dashboard/update-pet/${pet._id}`}
+            href={`/update-pet/${pet._id}`}
             className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-2xl hover:bg-emerald-600 hover:text-white transition-all duration-300 font-bold text-xs text-center"
           >
             <FaEdit size={14} /> <span>Edit</span>
