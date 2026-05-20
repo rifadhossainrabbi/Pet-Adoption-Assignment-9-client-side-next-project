@@ -1,21 +1,59 @@
 'use client';
 import { authClient } from '@/lib/auth-client';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 const AdoptionForm = ({ singlePet }) => {
-  const { PetName } = singlePet;
+  const { PetName, _id, ownerEmail } = singlePet;
   const { data: session } = authClient.useSession();
   const user = session?.user;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = data => {
-    console.log(data);
+  const onSubmit = async formData => {
+    setIsSubmitting(true);
+
+    const completeData = {
+      petName: PetName,
+      clientName: user?.name,
+      email: user?.email,
+      image: user?.image || '',
+      pickupDate: formData.pickupDate,
+      message: formData.message,
+      petId: _id,
+      ownerEmail: ownerEmail,
+      status: 'pending',
+    };
+    console.log(completeData)
+
+    try {
+      const res = await fetch('http://localhost:5000/request', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify(completeData),
+      });
+
+      const result = await res.json();
+
+      if (result.insertedId) {
+        toast.success('Successfully Requested for Adoption!');
+        reset();
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong!');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -48,7 +86,7 @@ const AdoptionForm = ({ singlePet }) => {
               />
             </div>
 
-            {/* User Name  */}
+            {/* User Name */}
             <div className="flex flex-col gap-1.5">
               <label className="text-[11px] font-bold text-gray-400 uppercase tracking-wider ml-1">
                 Your Name
@@ -70,7 +108,6 @@ const AdoptionForm = ({ singlePet }) => {
               <input
                 type="email"
                 defaultValue={user?.email}
-                readOnly
                 className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none bg-white/70 text-gray-500 font-medium"
                 {...register('email')}
               />
@@ -83,15 +120,14 @@ const AdoptionForm = ({ singlePet }) => {
               </label>
               <input
                 type="date"
-                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all bg-white text-gray-700 ${
-                  errors.pickupDate
-                    ? 'border-red-400'
-                    : 'border-gray-200 focus:border-orange-300'
-                }`}
-                {...register('pickupDate', {
-                  required: 'Please select a date',
-                })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none bg-white text-gray-700 ${errors.pickupDate ? 'border-red-400' : 'border-gray-200 focus:border-orange-300'}`}
+                {...register('pickupDate', { required: 'Date is required' })}
               />
+              {errors.pickupDate && (
+                <span className="text-red-500 text-[10px] ml-1">
+                  {errors.pickupDate.message}
+                </span>
+              )}
             </div>
 
             {/* Message */}
@@ -101,23 +137,23 @@ const AdoptionForm = ({ singlePet }) => {
               </label>
               <textarea
                 placeholder="Tell us why you want to adopt..."
-                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all bg-white text-gray-700 flex-grow min-h-[120px] resize-none ${
-                  errors.message
-                    ? 'border-red-400'
-                    : 'border-gray-200 focus:border-orange-300'
-                }`}
-                {...register('message', {
-                  required: 'Please write a short message',
-                })}
+                className={`w-full px-4 py-3 rounded-xl border outline-none bg-white text-gray-700 flex-grow min-h-[120px] resize-none ${errors.message ? 'border-red-400' : 'border-gray-200 focus:border-orange-300'}`}
+                {...register('message', { required: 'Message is required' })}
               ></textarea>
+              {errors.message && (
+                <span className="text-red-500 text-[10px] ml-1">
+                  {errors.message.message}
+                </span>
+              )}
             </div>
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-4 rounded-2xl text-white font-black text-lg shadow-lg shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3 mt-4 bg-orange-500 hover:cursor-pointer"
+              disabled={isSubmitting}
+              className={`w-full py-4 rounded-2xl text-white font-black text-lg shadow-lg shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3 mt-4 bg-orange-500 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:cursor-pointer'}`}
             >
-              🐾 Adopt Request
+              {isSubmitting ? '🐾 Sending...' : '🐾 Adopt Request'}
             </button>
           </form>
         </div>

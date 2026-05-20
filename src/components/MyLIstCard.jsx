@@ -4,17 +4,14 @@ import { authClient } from '@/lib/auth-client';
 import React from 'react';
 import MyListPetCard from './MyListPetCard';
 
-const MyListCard = ({ allPets }) => {
+const MyListCard = ({ allPets, clientRequests }) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
-  // আপনার নিজের আপলোড করা পেটগুলো ফিল্টার করা
   const filterData =
     allPets?.filter(item => item.ownerEmail === user?.email) || [];
 
-  // Stats ক্যালকুলেশন
   const totalListings = filterData.length;
-  // মনে করছি আপনার ডাটাতে status ফিল্ড আছে, না থাকলে ডিফল্ট 'available' ধরবে
   const adoptedCount = filterData.filter(
     pet => pet.status === 'adopted',
   ).length;
@@ -54,11 +51,15 @@ const MyListCard = ({ allPets }) => {
         </div>
       </div>
 
-      {/* Grid List */}
+      {/* my list pet card */}
       {filterData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filterData.map(pet => (
-            <MyListPetCard key={pet._id} pet={pet} />
+            <MyListPetCard
+              key={pet._id}
+              pet={pet}
+              clientRequests={clientRequests}
+            />
           ))}
         </div>
       ) : (

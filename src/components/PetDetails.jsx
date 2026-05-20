@@ -4,6 +4,7 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { FaDog, FaCalendarAlt, FaVenusMars } from 'react-icons/fa';
 
 const PetDetails = ({ singlePet }) => {
+  console.log(singlePet)
   return (
     <div className="bg-white border border-gray-100 rounded-[32px] p-8 h-full shadow-sm flex flex-col">
       {/* image and info */}
@@ -12,8 +13,8 @@ const PetDetails = ({ singlePet }) => {
         <div className="w-full md:w-1/2">
           <div className="relative aspect-square w-full rounded-2xl overflow-hidden shadow-sm border border-gray-50">
             <Image
-              src={singlePet.imageUrl}
-              alt={singlePet.PetName}
+              src={singlePet?.imageUrl}
+              alt={singlePet?.PetName}
               fill
               className="object-cover"
               priority
