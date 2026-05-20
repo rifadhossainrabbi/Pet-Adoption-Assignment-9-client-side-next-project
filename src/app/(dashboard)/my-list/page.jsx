@@ -1,9 +1,13 @@
+import MyLIstCard from '@/components/MyLIstCard';
 import React from 'react';
 
-const MyListPage = () => {
+const MyListPage = async () => {
+  const res = await fetch('http://localhost:5000/pets');
+  const allPets = await res.json();
+
   return (
     <div>
-      <h1>My Lists!</h1>
+      <MyLIstCard allPets={allPets} />
     </div>
   );
 };

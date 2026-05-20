@@ -12,6 +12,7 @@ import {
   Radio,
 } from '@heroui/react';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const AddPetPage = () => {
   const [isPending, setIsPending] = useState(false);

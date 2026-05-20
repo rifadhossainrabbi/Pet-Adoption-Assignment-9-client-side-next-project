@@ -3,7 +3,7 @@ import { Label, ListBox, SearchField, Select } from '@heroui/react';
 import React from 'react';
 
 const AllPetsPage = async () => {
-  const res = await fetch('http://localhost:5000/pets', { cache: 'no-store' });
+  const res = await fetch('http://localhost:5000/pets');
   const allPets = await res.json();
 
   const speciesOptions = [
