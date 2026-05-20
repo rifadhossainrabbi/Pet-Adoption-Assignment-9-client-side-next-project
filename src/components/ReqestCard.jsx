@@ -1,10 +1,13 @@
 'use client';
 import { authClient } from '@/lib/auth-client';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 import { FaRegEye, FaTrashAlt } from 'react-icons/fa';
+import { CancleModal } from './CancleModal';
 
 const RequestCard = ({ clientRequest }) => {
+  console.log(clientRequest);
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
@@ -88,14 +91,18 @@ const RequestCard = ({ clientRequest }) => {
 
                 {/* Actions */}
                 <div className="col-span-2 flex justify-end gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl font-bold text-[10px] uppercase tracking-wider hover:bg-blue-600 hover:text-white transition-all active:scale-95">
-                    <FaRegEye size={14} />
-                    View
-                  </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-rose-50 text-rose-600 rounded-xl font-bold text-[10px] uppercase tracking-wider hover:bg-rose-600 hover:text-white transition-all active:scale-95">
+                  <Link href={`/all-pets/${req.petId}`}>
+                    <button className="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-xl font-bold text-[10px] uppercase tracking-wider hover:bg-blue-600 hover:text-white transition-all active:scale-95">
+                      <FaRegEye size={14} />
+                      View
+                    </button>
+                  </Link>
+                  {/* <button className="flex items-center gap-2 px-4 py-2 bg-rose-50 text-rose-600 rounded-xl font-bold text-[10px] uppercase tracking-wider hover:bg-rose-600 hover:text-white transition-all active:scale-95">
                     <FaTrashAlt size={12} />
                     Cancel
-                  </button>
+                  </button> */}
+
+                  <CancleModal myRequests={req._id} />
                 </div>
               </div>
             ))
