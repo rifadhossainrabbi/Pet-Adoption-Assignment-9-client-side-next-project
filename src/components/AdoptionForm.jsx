@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
 const AdoptionForm = ({ singlePet }) => {
-  const { PetName, _id, ownerEmail, imageUrl } = singlePet;
+  const { PetName, _id, ownerEmail, imageUrl, sotck } = singlePet;
   const { data: session } = authClient.useSession();
   const user = session?.user;
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +22,7 @@ const AdoptionForm = ({ singlePet }) => {
 
     const completeData = {
       petName: PetName,
-      petImage:imageUrl,
+      petImage: imageUrl,
       clientName: user?.name,
       email: user?.email,
       image: user?.image || '',
@@ -32,7 +32,6 @@ const AdoptionForm = ({ singlePet }) => {
       ownerEmail: ownerEmail,
       status: 'pending',
     };
-    console.log(completeData)
 
     try {
       const res = await fetch('http://localhost:5000/request', {
@@ -60,9 +59,13 @@ const AdoptionForm = ({ singlePet }) => {
   return (
     <>
       {user?.email === singlePet.ownerEmail ? (
-        <p className="text-center font-bold text-red-500 p-10 bg-red-50 rounded-3xl">
-          You cannot adopt your own pet
-        </p>
+        <div className="text-center font-bold text-red-500 p-10 bg-red-50 rounded-[32px] border border-red-100 h-full flex items-center justify-center">
+          <p>You cannot adopt your own pet 🐾</p>
+        </div>
+      ) : sotck !== 'Available' ? (
+        <div className="text-center font-bold text-orange-500 p-10 bg-orange-50 rounded-[32px] border border-orange-100 h-full flex items-center justify-center">
+          <p>Sorry! This pet has already been adopted 🏠</p>
+        </div>
       ) : (
         <div className="bg-[#FFF5F1] p-8 rounded-[32px] border border-orange-100 h-full flex flex-col shadow-sm">
           <h2 className="text-2xl font-black text-[#1A202C] mb-8">
