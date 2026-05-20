@@ -12,6 +12,7 @@ import {
   FaTimes,
   FaUserCircle,
 } from 'react-icons/fa';
+import { RemovePet } from './RemovePet';
 
 const MyListPetCard = ({ pet, clientRequests }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,9 +95,7 @@ const MyListPetCard = ({ pet, clientRequests }) => {
             <FaRegEye size={14} /> <span>View</span>
           </Link>
 
-          <button className="flex items-center justify-center gap-2 px-4 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-2xl hover:bg-rose-600 hover:text-white transition-all duration-300 font-bold text-xs">
-            <FaTrashAlt size={14} /> <span>Delete</span>
-          </button>
+          <RemovePet petId={pet._id} />
         </div>
       </div>
 
