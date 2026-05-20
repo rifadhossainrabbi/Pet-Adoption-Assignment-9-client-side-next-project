@@ -2,7 +2,6 @@ import Banner from '@/components/Banner';
 import FeaturedPets from '@/components/FeaturedPets';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import Image from 'next/image';
 
 export default function Home() {
   return (

@@ -18,10 +18,10 @@ const MyListPetCard = ({ pet, clientRequests }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
+  // এই পেটের জন্য আসা নির্দিষ্ট রিকোয়েস্টগুলো ফিল্টার করা
   const specificRequests = clientRequests?.filter(
     req => String(req.petId) === String(pet._id),
   );
-  console.log(specificRequests);
 
   const handleStatusUpdate = async (requestId, newStatus) => {
     try {
@@ -34,13 +34,25 @@ const MyListPetCard = ({ pet, clientRequests }) => {
       });
 
       if (res.ok) {
-        toast.success(`Request ${newStatus} successfully`);
-        router.refresh();
+        if (newStatus === 'approved') {
+          await fetch(`http://localhost:5000/pets/${pet._id}`, {
+            method: 'PATCH',
+            headers: {
+              'content-type': 'application/json',
+            },
+            body: JSON.stringify({ sotck: 'Adopted' }),
+          });
+        }
+
+        toast.success(`Request ${newStatus} successfully!`);
+        setIsOpen(false); 
+        router.refresh(); 
       } else {
         toast.error('Failed to update status');
       }
     } catch (error) {
       console.error('Error:', error);
+      toast.error('Something went wrong!');
     }
   };
 
@@ -63,10 +75,20 @@ const MyListPetCard = ({ pet, clientRequests }) => {
           <h3 className="text-xl font-bold text-gray-800 truncate group-hover:text-orange-600 transition-colors">
             {pet.PetName}
           </h3>
-          <span className="text-orange-600 font-black text-lg">
-            ${pet.adoptionFee}
-          </span>
+          <button
+            className={`backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-md transition-all font-bold text-xs uppercase
+          ${
+            pet.sotck === 'Available'
+              ? 'bg-green-500/20 border border-green-400 text-green-500 hover:bg-green-600 hover:text-white'
+              : 'bg-red-500/20 border border-red-400 text-red-700 hover:bg-red-600 hover:text-white'
+          }`}
+          >
+            {pet.sotck === 'Available' ? 'Available' : '🏠 Adopted'}
+          </button>
         </div>
+        <span className="text-orange-600 font-black text-lg">
+          ${pet.adoptionFee}
+        </span>
         <p className="text-gray-400 text-sm mb-6">
           {pet.species} • {pet.breed}
         </p>

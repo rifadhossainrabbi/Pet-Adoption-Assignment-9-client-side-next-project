@@ -22,16 +22,25 @@ const PetCard = ({ pet }) => {
         />
         {/* Heart Icon */}
         <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <button className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm p-2 rounded-xl shadow-md hover:bg-red-50 text-orange-500 hover:text-red-500 transition-all active:scale-90">
-          <FaRegHeart size={18} />
-        </button>
       </div>
 
       {/* Pet info */}
       <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-lg font-bold text-gray-800 truncate mb-1 group-hover:text-orange-600 transition-colors">
-          {pet.PetName}
-        </h3>
+        <div className='flex justify-between'>
+          <h3 className="text-lg font-bold text-gray-800 truncate mb-1 group-hover:text-orange-600 transition-colors">
+            {pet.PetName}
+          </h3>
+          <button
+            className={`backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-md transition-all font-bold text-xs uppercase
+          ${
+            pet.sotck === 'Available'
+              ? 'bg-green-500/20 border border-green-400 text-green-500 hover:bg-green-600 hover:text-white'
+              : 'bg-red-500/20 border border-red-400 text-red-700 hover:bg-red-600 hover:text-white'
+          }`}
+          >
+            {pet.sotck === 'Available' ? 'Available' : '🏠 Adopted'}
+          </button>
+        </div>
 
         <p className="text-xs font-medium text-gray-500 mb-3 flex items-center gap-1">
           <span className="bg-orange-50 text-orange-600 px-2 py-0.5 rounded-md">

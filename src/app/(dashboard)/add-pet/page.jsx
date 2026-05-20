@@ -38,12 +38,21 @@ const AddPetPage = () => {
     const petData = Object.fromEntries(formdata.entries());
     console.log(petData);
 
+      const completeData = {
+        ...petData,
+        ownerId: user.id, 
+        ownerName: user.name, 
+        ownerEmail: user.email,
+        createdAt: new Date(),
+        sotck: 'Available',
+      };
+
     const res = await fetch('http://localhost:5000/pets', {
       method: 'POST',
       headers: {
         'content-type': 'application/json',
       },
-      body: JSON.stringify(petData),
+      body: JSON.stringify(completeData),
     });
     const data = await res.json();
     console.log(data);
