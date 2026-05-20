@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 import {
   FaEdit,
   FaRegEye,
@@ -13,11 +15,33 @@ import {
 
 const MyListPetCard = ({ pet, clientRequests }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
-  const specificRequests =
-  clientRequests?.filter(req => String(req.petId) === String(pet._id));
+  const router = useRouter();
+
+  const specificRequests = clientRequests?.filter(
+    req => String(req.petId) === String(pet._id),
+  );
   console.log(specificRequests);
-  
+
+  const handleStatusUpdate = async (requestId, newStatus) => {
+    try {
+      const res = await fetch(`http://localhost:5000/request/${requestId}`, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (res.ok) {
+        toast.success(`Request ${newStatus} successfully`);
+        router.refresh();
+      } else {
+        toast.error('Failed to update status');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   return (
     <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group flex flex-col h-full relative">
@@ -46,7 +70,7 @@ const MyListPetCard = ({ pet, clientRequests }) => {
           {pet.species} • {pet.breed}
         </p>
 
-        {/* Buttons Grid */}
+        {/* Buttons  */}
         <div className="grid grid-cols-2 gap-3 mt-auto">
           <button
             onClick={() => setIsOpen(true)}
@@ -79,24 +103,20 @@ const MyListPetCard = ({ pet, clientRequests }) => {
       {/* Request Modal*/}
       {isOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
-
           <div
             className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
             onClick={() => setIsOpen(false)}
           ></div>
 
-          {/* Modal Container */}
-          <div className="relative bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden transform transition-all animate-in zoom-in duration-300">
+          <div className="relative bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden">
             {/* Header */}
             <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-white sticky top-0 z-10">
-              <div>
-                <h2 className="text-2xl font-black text-gray-800">
-                  Adoption Requests For {pet.PetName}
-                </h2>
-              </div>
+              <h2 className="text-2xl font-black text-gray-800">
+                Adoption Requests For {pet.PetName}
+              </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+                className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
               >
                 <FaTimes className="text-gray-400" size={20} />
               </button>
@@ -108,7 +128,7 @@ const MyListPetCard = ({ pet, clientRequests }) => {
                 specificRequests.map((req, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row gap-5 p-6 rounded-[28px] bg-white border border-gray-100 mb-6 last:mb-0 shadow-sm"
+                    className="flex flex-col sm:flex-row gap-5 p-6 rounded-[28px] bg-white border border-gray-100 mb-6 shadow-sm"
                   >
                     {/* User Avatar */}
                     <div className="shrink-0">
@@ -132,55 +152,65 @@ const MyListPetCard = ({ pet, clientRequests }) => {
                     <div className="flex-grow">
                       <div className="flex justify-between items-start mb-4">
                         <div>
-                          <h4 className="font-black text-gray-800 text-xl leading-tight">
-                            {req.clientName}
+                          <h4 className="font-black text-gray-800 text-xl">
+                            {req.clientName || 'Anonymous'}
                           </h4>
                           <p className="text-gray-400 text-sm font-medium">
                             {req.email}
                           </p>
                         </div>
-                        <span className="px-3 py-1 bg-orange-50 text-orange-500 rounded-full text-[10px] font-black uppercase tracking-widest border border-orange-100">
-                          Pending
+
+                        <span
+                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                            req.status === 'approved'
+                              ? 'bg-emerald-50 text-emerald-500 border-emerald-100'
+                              : req.status === 'rejected'
+                                ? 'bg-rose-50 text-rose-500 border-rose-100'
+                                : 'bg-orange-50 text-orange-500 border-orange-100'
+                          }`}
+                        >
+                          {req.status}
                         </span>
                       </div>
 
-                      {/* Details Box */}
                       <div className="space-y-3 bg-gray-50 p-5 rounded-2xl border border-gray-100">
-                        <div className="flex flex-col gap-1">
-                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            Pickup Date
-                          </span>
-                          <p className="text-gray-700 font-bold text-sm">
-                            {req.pickupDate}
-                          </p>
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                            Message
-                          </span>
-                          <p className="text-gray-600 font-medium text-sm leading-relaxed italic">
-                            {req.message}
-                          </p>
-                        </div>
+                        <p className="text-gray-700 font-bold text-sm">
+                          Pickup Date: {req.pickupDate}
+                        </p>
+                        <p className="text-gray-600 font-medium text-sm italic">
+                          {req.message}
+                        </p>
                       </div>
 
                       {/* Action Buttons */}
                       <div className="flex justify-end gap-3 mt-6">
-                        <button className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer">
-                          Approve
-                        </button>
-                        <button className="bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer">
-                          Reject
-                        </button>
+                        {req.status === 'pending' && (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleStatusUpdate(req._id, 'approved')
+                              }
+                              className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleStatusUpdate(req._id, 'rejected')
+                              }
+                              className="bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer"
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="py-20 text-center">
-                  <p className="text-gray-400 font-bold italic">
-                    No adoption requests for {pet.PetName} yet.
-                  </p>
+                <div className="py-20 text-center text-gray-400 italic">
+                  No requests yet.
                 </div>
               )}
             </div>

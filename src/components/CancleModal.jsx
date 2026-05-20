@@ -6,29 +6,34 @@ import toast from 'react-hot-toast';
 import { FaTrashAlt } from 'react-icons/fa';
 
 
-export function CancleModal({ myRequests }) {
-   const router = useRouter();
+export function CancleModal({ myRequests, status }) {
+  console.log(status);
+  const router = useRouter();
   console.log(myRequests);
-   const handleCancle = async () => {
-     try {
-       const res = await fetch(`http://localhost:5000/request/${myRequests}`, {
-         method: 'DELETE',
-         headers: {
-           'content-type':"application/json",
-         }
-       });
-       const data = await res.json();
+  const handleCancle = async () => {
+    if (status !== "approved") {
+      try {
+        const res = await fetch(`http://localhost:5000/request/${myRequests}`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+          },
+        });
+        const data = await res.json();
 
-       if (res.ok) {
-         toast.success('Request cancelled successfully');
-         router.refresh();
-       } else {
-         console.error('Failed to delete');
-       }
-     } catch (error) {
-       console.error('Error:', error);
-     }
-   };
+        if (res.ok) {
+          toast.success('Request cancelled successfully');
+          router.refresh();
+        } else {
+          console.error('Failed to delete');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    } else {
+      toast.success('You can not delete ');
+    }
+  };
   return (
     <AlertDialog>
       <Button variant="outline" className="text-red-500">

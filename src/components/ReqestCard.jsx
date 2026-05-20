@@ -7,13 +7,13 @@ import { FaRegEye, FaTrashAlt } from 'react-icons/fa';
 import { CancleModal } from './CancleModal';
 
 const RequestCard = ({ clientRequest }) => {
-  console.log(clientRequest);
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
-
+  
   const myRequests =
-    clientRequest?.filter(req => req.email === user?.email) || [];
-
+  clientRequest?.filter(req => req.email === user?.email) || [];
+  console.log(myRequests);
+  
   if (isPending)
     return <div className="p-10 text-center font-bold">Loading...</div>;
 
@@ -102,7 +102,7 @@ const RequestCard = ({ clientRequest }) => {
                     Cancel
                   </button> */}
 
-                  <CancleModal myRequests={req._id} />
+                  <CancleModal myRequests={req._id} status={req.status} />
                 </div>
               </div>
             ))
