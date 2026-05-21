@@ -32,20 +32,20 @@ const SaveLife = () => {
   return (
     <section className="bg-[#050211] py-10">
       <div className="container mx-auto px-4">
-        {/* মেইন কার্ড কন্টেইনার - ডার্ক ভায়োলেট গ্লাস ইফেক্ট */}
+        {/* main card */}
         <div className="bg-[#120D26]/60 backdrop-blur-xl rounded-[32px] md:rounded-[40px] p-8 md:p-12 border border-white/5 shadow-2xl">
-          {/* সেকশন গ্রিড */}
+          {/* child section grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-6">
             {features.map((item, index) => (
               <div key={index} className="flex items-center gap-5 group">
-                {/* আইকন বক্স উইথ রঙিন গ্লো */}
+                {/* icon */}
                 <div
                   className={`w-16 h-16 shrink-0 rounded-full flex items-center justify-center bg-white/5 border transition-all duration-500 group-hover:scale-110 ${item.glow}`}
                 >
                   {item.icon}
                 </div>
 
-                {/* টেক্সট কন্টেন্ট */}
+                {/* text content */}
                 <div className="flex flex-col">
                   <h3 className="text-white font-bold text-lg md:text-xl leading-tight mb-1 group-hover:text-purple-400 transition-colors">
                     {item.title}

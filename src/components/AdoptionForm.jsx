@@ -30,6 +30,7 @@ const AdoptionForm = ({ singlePet }) => {
       petId: _id,
       ownerEmail: ownerEmail,
       status: 'pending',
+      requestDate: new Date(),
     };
 
     const { data: tokenData } = await authClient.token();

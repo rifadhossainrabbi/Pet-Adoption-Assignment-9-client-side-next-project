@@ -3,7 +3,7 @@ import { FaBowlFood, FaDumbbell, FaStethoscope, FaPaw } from 'react-icons/fa6';
 import { MdSecurity, MdPets, MdFavorite } from 'react-icons/md';
 
 const PetCareTips = () => {
-  // Pet Care Tips Data (ডেটা অপরিবর্তিত রাখা হয়েছে)
+  // Pet Care Tips Data 
   const careTips = [
     {
       title: 'Good Food',
@@ -28,7 +28,7 @@ const PetCareTips = () => {
     },
   ];
 
-  // Shelter Partners Data (ডেটা অপরিবর্তিত রাখা হয়েছে)
+  // Shelter Partners Data 
   const partners = [
     {
       name: 'Happy Paws',

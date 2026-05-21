@@ -72,7 +72,13 @@ const RequestCard = ({ clientRequest }) => {
                   </span>
                 </div>
                 <div className="col-span-2 text-sm text-gray-500 font-semibold">
-                  N/A
+                  {req.requestDate
+                    ? new Date(req.requestDate).toLocaleDateString('en-GB', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                      })
+                    : 'N/A'}
                 </div>
                 <div className="col-span-2 text-sm text-gray-400 font-semibold">
                   {new Date(req.pickupDate).toLocaleDateString('en-GB', {
