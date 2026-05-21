@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 import {
   FaEdit,
   FaRegEye,
-  FaTrashAlt,
   FaUsers,
   FaTimes,
   FaUserCircle,
@@ -18,7 +17,6 @@ const MyListPetCard = ({ pet, clientRequests }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  // এই পেটের জন্য আসা নির্দিষ্ট রিকোয়েস্টগুলো ফিল্টার করা
   const specificRequests = clientRequests?.filter(
     req => String(req.petId) === String(pet._id),
   );
@@ -27,134 +25,116 @@ const MyListPetCard = ({ pet, clientRequests }) => {
     try {
       const res = await fetch(`http://localhost:5000/request/${requestId}`, {
         method: 'PATCH',
-        headers: {
-          'content-type': 'application/json',
-        },
+        headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
-
       if (res.ok) {
         if (newStatus === 'approved') {
           await fetch(`http://localhost:5000/pets/${pet._id}`, {
             method: 'PATCH',
-            headers: {
-              'content-type': 'application/json',
-            },
+            headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ sotck: 'Adopted' }),
           });
         }
-
         toast.success(`Request ${newStatus} successfully!`);
-        setIsOpen(false); 
-        router.refresh(); 
+        setIsOpen(false);
+        router.refresh();
       } else {
         toast.error('Failed to update status');
       }
     } catch (error) {
-      console.error('Error:', error);
       toast.error('Something went wrong!');
     }
   };
 
   return (
-    <div className="bg-white rounded-[2.5rem] shadow-sm border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group flex flex-col h-full relative">
-      {/*Pet Image Section */}
-      <div className="relative aspect-square w-full overflow-hidden">
+    <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:border-white/20 transition-all duration-300 group flex flex-col h-full">
+      {/* Image */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
         <Image
           src={pet.imageUrl}
           alt={pet.PetName}
           fill
-          sizes="(max-width: 768px) 100vw, 16vw"
-          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
+        <div className="absolute top-3 right-3">
+          <span
+            className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border backdrop-blur-sm ${
+              pet.sotck === 'Available'
+                ? 'bg-green-500/20 border-green-500/40 text-green-400'
+                : 'bg-red-500/20 border-red-500/40 text-red-400'
+            }`}
+          >
+            {pet.sotck === 'Available' ? 'Available' : 'Adopted'}
+          </span>
+        </div>
       </div>
 
-      {/* Pet Info Section */}
-      <div className="p-6 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-1">
-          <h3 className="text-xl font-bold text-gray-800 truncate group-hover:text-orange-600 transition-colors">
-            {pet.PetName}
-          </h3>
-          <button
-            className={`backdrop-blur-sm px-3 py-1.5 rounded-xl shadow-md transition-all font-bold text-xs uppercase
-          ${
-            pet.sotck === 'Available'
-              ? 'bg-green-500/20 border border-green-400 text-green-500 hover:bg-green-600 hover:text-white'
-              : 'bg-red-500/20 border border-red-400 text-red-700 hover:bg-red-600 hover:text-white'
-          }`}
-          >
-            {pet.sotck === 'Available' ? 'Available' : '🏠 Adopted'}
-          </button>
-        </div>
-        <span className="text-orange-600 font-black text-lg">
-          ${pet.adoptionFee}
-        </span>
-        <p className="text-gray-400 text-sm mb-6">
+      {/* Info */}
+      <div className="p-5 flex flex-col flex-grow">
+        <h3 className="text-lg font-black text-white mb-1 truncate">
+          {pet.PetName}
+        </h3>
+        <p className="text-gray-500 text-sm mb-1">
           {pet.species} • {pet.breed}
         </p>
+        <span className="text-[#C084FC] font-black text-lg mb-4">
+          ${pet.adoptionFee}
+        </span>
 
-        {/* Buttons  */}
-        <div className="grid grid-cols-2 gap-3 mt-auto">
+        <div className="grid grid-cols-2 gap-2 mt-auto">
           <button
             onClick={() => setIsOpen(true)}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-50 text-blue-600 border border-blue-100 rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 font-bold text-xs active:scale-95 cursor-pointer"
+            className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 border border-white/10 text-gray-300 rounded-xl hover:bg-[#C084FC]/20 hover:border-[#C084FC]/40 hover:text-[#C084FC] transition-all font-bold text-xs"
           >
-            <FaUsers size={14} />
-            <span>Requests</span>
+            <FaUsers size={13} /> Requests
           </button>
-
           <Link
             href={`/update-pet/${pet._id}`}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-2xl hover:bg-emerald-600 hover:text-white transition-all duration-300 font-bold text-xs text-center"
+            className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 border border-white/10 text-gray-300 rounded-xl hover:bg-emerald-500/20 hover:border-emerald-500/40 hover:text-emerald-400 transition-all font-bold text-xs"
           >
-            <FaEdit size={14} /> <span>Edit</span>
+            <FaEdit size={13} /> Edit
           </Link>
-
           <Link
             href={`/all-pets/${pet._id}`}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-600 border border-slate-200 rounded-2xl hover:bg-slate-600 hover:text-white transition-all duration-300 font-bold text-xs text-center"
+            className="flex items-center justify-center gap-2 px-3 py-2.5 bg-white/5 border border-white/10 text-gray-300 rounded-xl hover:bg-blue-500/20 hover:border-blue-500/40 hover:text-blue-400 transition-all font-bold text-xs"
           >
-            <FaRegEye size={14} /> <span>View</span>
+            <FaRegEye size={13} /> View
           </Link>
-
           <RemovePet petId={pet._id} />
         </div>
       </div>
 
-      {/* Request Modal*/}
+      {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+            className="absolute inset-0 bg-black/70 backdrop-blur-md"
             onClick={() => setIsOpen(false)}
-          ></div>
-
-          <div className="relative bg-white w-full max-w-2xl rounded-[32px] shadow-2xl overflow-hidden">
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-white sticky top-0 z-10">
-              <h2 className="text-2xl font-black text-gray-800">
-                Adoption Requests For {pet.PetName}
+          />
+          <div className="relative bg-[#0F0821] border border-white/10 w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+            <div className="flex justify-between items-center p-6 border-b border-white/10">
+              <h2 className="text-xl font-black text-white">
+                Requests for {pet.PetName}
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
-                className="p-2 hover:bg-gray-100 rounded-full cursor-pointer"
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
               >
-                <FaTimes className="text-gray-400" size={20} />
+                <FaTimes className="text-gray-400" size={18} />
               </button>
             </div>
-
-            {/* Body */}
-            <div className="p-6 max-h-[70vh] overflow-y-auto bg-gray-50/30">
+            <div className="p-6 max-h-[65vh] overflow-y-auto space-y-4">
               {specificRequests.length > 0 ? (
                 specificRequests.map((req, index) => (
                   <div
                     key={index}
-                    className="flex flex-col sm:flex-row gap-5 p-6 rounded-[28px] bg-white border border-gray-100 mb-6 shadow-sm"
+                    className="flex gap-4 p-5 rounded-2xl bg-white/5 border border-white/10"
                   >
-                    {/* User Avatar */}
                     <div className="shrink-0">
                       {req.image ? (
-                        <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-orange-100 shadow-sm">
+                        <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-white/10">
                           <Image
                             src={req.image}
                             alt={req.clientName}
@@ -163,74 +143,64 @@ const MyListPetCard = ({ pet, clientRequests }) => {
                           />
                         </div>
                       ) : (
-                        <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
-                          <FaUserCircle className="text-gray-300 w-full h-full" />
+                        <div className="w-14 h-14 rounded-full bg-white/10 flex items-center justify-center">
+                          <FaUserCircle className="text-gray-500 w-10 h-10" />
                         </div>
                       )}
                     </div>
-
-                    {/* Info Content */}
-                    <div className="flex-grow">
-                      <div className="flex justify-between items-start mb-4">
+                    <div className="flex-grow min-w-0">
+                      <div className="flex justify-between items-start mb-3 gap-2">
                         <div>
-                          <h4 className="font-black text-gray-800 text-xl">
+                          <h4 className="font-black text-white">
                             {req.clientName || 'Anonymous'}
                           </h4>
-                          <p className="text-gray-400 text-sm font-medium">
-                            {req.email}
-                          </p>
+                          <p className="text-gray-500 text-xs">{req.email}</p>
                         </div>
-
                         <span
-                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                          className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border shrink-0 ${
                             req.status === 'approved'
-                              ? 'bg-emerald-50 text-emerald-500 border-emerald-100'
+                              ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30'
                               : req.status === 'rejected'
-                                ? 'bg-rose-50 text-rose-500 border-rose-100'
-                                : 'bg-orange-50 text-orange-500 border-orange-100'
+                                ? 'bg-rose-500/20 text-rose-400 border-rose-500/30'
+                                : 'bg-orange-500/20 text-orange-400 border-orange-500/30'
                           }`}
                         >
                           {req.status}
                         </span>
                       </div>
-
-                      <div className="space-y-3 bg-gray-50 p-5 rounded-2xl border border-gray-100">
-                        <p className="text-gray-700 font-bold text-sm">
-                          Pickup Date: {req.pickupDate}
+                      <div className="bg-white/5 p-4 rounded-xl border border-white/5 mb-3">
+                        <p className="text-gray-300 text-sm font-bold">
+                          Pickup: {req.pickupDate}
                         </p>
-                        <p className="text-gray-600 font-medium text-sm italic">
+                        <p className="text-gray-500 text-sm italic mt-1">
                           {req.message}
                         </p>
                       </div>
-
-                      {/* Action Buttons */}
-                      <div className="flex justify-end gap-3 mt-6">
-                        {req.status === 'pending' && (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleStatusUpdate(req._id, 'approved')
-                              }
-                              className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer"
-                            >
-                              Approve
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleStatusUpdate(req._id, 'rejected')
-                              }
-                              className="bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl px-8 py-2.5 transition-all active:scale-95 text-sm cursor-pointer"
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )}
-                      </div>
+                      {req.status === 'pending' && (
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() =>
+                              handleStatusUpdate(req._id, 'approved')
+                            }
+                            className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-xl px-6 py-2 transition-all text-sm active:scale-95"
+                          >
+                            Approve
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleStatusUpdate(req._id, 'rejected')
+                            }
+                            className="bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl px-6 py-2 transition-all text-sm active:scale-95"
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))
               ) : (
-                <div className="py-20 text-center text-gray-400 italic">
+                <div className="py-16 text-center text-gray-600 italic">
                   No requests yet.
                 </div>
               )}

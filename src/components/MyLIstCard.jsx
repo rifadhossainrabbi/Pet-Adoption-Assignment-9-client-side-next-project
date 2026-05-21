@@ -1,5 +1,4 @@
 'use client';
-
 import { authClient } from '@/lib/auth-client';
 import React from 'react';
 import MyListPetCard from './MyListPetCard';
@@ -10,50 +9,53 @@ const MyListCard = ({ allPets, clientRequests }) => {
 
   const filterData =
     allPets?.filter(item => item.ownerEmail === user?.email) || [];
-
   const totalListings = filterData.length;
-  const adoptedCount = filterData.filter(
-    pet => pet.status === 'adopted',
-  ).length;
+  const adoptedCount = filterData.filter(pet => pet.sotck === 'Adopted').length;
   const availableCount = totalListings - adoptedCount;
 
-  if (isPending) return <div className="text-center py-10">Loading...</div>;
+  if (isPending)
+    return (
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="w-8 h-8 border-2 border-[#C084FC] border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h1 className="text-3xl font-extrabold text-gray-800 mb-8">
+    <div className="p-4 sm:p-6 lg:p-8">
+      <h1 className="text-2xl sm:text-3xl font-black text-white mb-6">
         My Listings
       </h1>
 
-      {/* Stats Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-sm text-center">
-          <p className="text-blue-600 font-bold uppercase text-xs tracking-wider">
-            Total Listings
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-8">
+        <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-center">
+          <p className="text-[#C084FC] font-bold uppercase text-[10px] sm:text-xs tracking-wider mb-1">
+            Total
           </p>
-          <h2 className="text-4xl font-black text-blue-800">{totalListings}</h2>
+          <h2 className="text-2xl sm:text-4xl font-black text-white">
+            {totalListings}
+          </h2>
         </div>
-        <div className="bg-green-50 p-6 rounded-2xl border border-green-100 shadow-sm text-center">
-          <p className="text-green-600 font-bold uppercase text-xs tracking-wider">
+        <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-center">
+          <p className="text-green-400 font-bold uppercase text-[10px] sm:text-xs tracking-wider mb-1">
             Available
           </p>
-          <h2 className="text-4xl font-black text-green-800">
+          <h2 className="text-2xl sm:text-4xl font-black text-white">
             {availableCount}
           </h2>
         </div>
-        <div className="bg-orange-50 p-6 rounded-2xl border border-orange-100 shadow-sm text-center">
-          <p className="text-orange-600 font-bold uppercase text-xs tracking-wider">
+        <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-2xl sm:rounded-3xl text-center">
+          <p className="text-orange-400 font-bold uppercase text-[10px] sm:text-xs tracking-wider mb-1">
             Adopted
           </p>
-          <h2 className="text-4xl font-black text-orange-800">
+          <h2 className="text-2xl sm:text-4xl font-black text-white">
             {adoptedCount}
           </h2>
         </div>
       </div>
 
-      {/* my list pet card */}
       {filterData.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
           {filterData.map(pet => (
             <MyListPetCard
               key={pet._id}
@@ -63,7 +65,7 @@ const MyListCard = ({ allPets, clientRequests }) => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed">
+        <div className="text-center py-20 bg-white/5 rounded-3xl border border-dashed border-white/10">
           <p className="text-gray-500 text-lg font-medium">
             You haven't listed any pets yet.
           </p>

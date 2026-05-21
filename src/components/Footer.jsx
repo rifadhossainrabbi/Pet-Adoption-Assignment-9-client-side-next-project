@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {
   FaFacebookF,
@@ -10,127 +11,123 @@ import {
   FaPaw,
 } from 'react-icons/fa';
 import Link from 'next/link';
-import Image from 'next/image';
+
+const socialLinks = [
+  { Icon: FaFacebookF, color: 'hover:bg-blue-600', href: '#' },
+  { Icon: FaInstagram, color: 'hover:bg-pink-600', href: '#' },
+  { Icon: FaTwitter, color: 'hover:bg-sky-500', href: '#' },
+  { Icon: FaYoutube, color: 'hover:bg-red-600', href: '#' },
+];
+
+const quickLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'All Pets', href: '/all-pets' },
+  { label: 'My Requests', href: '/my-requests' },
+  { label: 'Add Pet', href: '/add-pet' },
+];
+
+const contactInfo = [
+  { Icon: FaMapMarkerAlt, text: 'Dhaka, Bangladesh', size: 14 },
+  { Icon: FaPhoneAlt, text: '+880 1234-567890', size: 12 },
+  { Icon: FaEnvelope, text: 'info@petnest.com', size: 14 },
+];
+
+const supportLinks = [
+  { label: 'FAQs', href: '/faqs' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms & Conditions', href: '/terms' },
+];
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0a192f] text-gray-300 py-12 px-6 md:px-16 relative overflow-hidden container mx-auto">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-        {/* Brand Info */}
-        <div className="space-y-4">
-          <Link href="/" className="flex items-center gap-2">
-            <Image
-              src="/assets/Paw__1_-removebg-preview.png"
-              alt="Logo"
-              width={200}
-              height={100}
-              priority
-            />
-          </Link>
-          <div className="text-sm space-y-1">
-            <p>Bringing pets and people together.</p>
-            <p>Adopt. Love. Repeat.</p>
+    <footer className="bg-[#050211] text-gray-400 py-12 md:py-16 border-t border-white/5">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-12">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="col-span-2 lg:col-span-1 space-y-5">
+            <Link href="/" className="flex items-center gap-2 group w-fit">
+              <div className="bg-gradient-to-br from-[#C084FC] to-[#E879F9] p-2 rounded-xl text-white shadow-[0_0_15px_rgba(192,132,252,0.3)] transition-transform group-hover:rotate-12">
+                <FaPaw size={20} />
+              </div>
+              <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-[#C084FC] to-[#E879F9]">
+                PetNest
+              </span>
+            </Link>
+            <div className="text-sm leading-relaxed opacity-80">
+              <p>Bringing pets and people together.</p>
+              <p>Adopt. Love. Repeat.</p>
+            </div>
+            <div className="flex gap-3">
+              {socialLinks.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 hover:text-white ${item.color}`}
+                >
+                  <item.Icon size={14} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="col-span-1">
+            <h3 className="text-white font-bold mb-4 md:mb-6 text-base md:text-lg">
+              Quick Links
+            </h3>
+            <ul className="space-y-3 text-sm font-medium">
+              {quickLinks.map(link => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="hover:text-[#C084FC] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-1">
+            <h3 className="text-white font-bold mb-4 md:mb-6 text-base md:text-lg">
+              Contact Us
+            </h3>
+            <ul className="space-y-3 text-sm font-medium">
+              {contactInfo.map((item, index) => (
+                <li key={index} className="flex items-start gap-3 group">
+                  <div className="text-purple-500 bg-purple-500/10 p-2 rounded-lg group-hover:scale-110 transition-transform shrink-0 mt-0.5">
+                    <item.Icon size={item.size} />
+                  </div>
+                  <span className="truncate text-xs sm:text-sm">
+                    {item.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-1">
+            <h3 className="text-white font-bold mb-4 md:mb-6 text-base md:text-lg">
+              Support
+            </h3>
+            <ul className="space-y-3 text-sm font-medium">
+              {supportLinks.map(link => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="hover:text-[#C084FC] transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/*Quick Links */}
-        <div>
-          <h3 className="text-white font-semibold mb-5 text-lg">Quick Links</h3>
-          <ul className="space-y-3 text-sm">
-            <li>
-              <Link href="/" className="hover:text-white transition-colors">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/all-pets"
-                className="hover:text-white transition-colors"
-              >
-                All Pets
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/about-us"
-                className="hover:text-white transition-colors"
-              >
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/contact-us"
-                className="hover:text-white transition-colors"
-              >
-                Contact Us
-              </Link>
-            </li>
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-white font-semibold mb-5 text-lg">
-            Contact Info
-          </h3>
-          <ul className="space-y-4 text-sm">
-            <li className="flex items-center gap-3">
-              <FaMapMarkerAlt size={18} className="text-orange-400" />
-              <span>Dhaka, Bangladesh</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <FaPhoneAlt size={16} className="text-orange-400" />
-              <span>+880 1234-567890</span>
-            </li>
-            <li className="flex items-center gap-3">
-              <FaEnvelope size={18} className="text-orange-400" />
-              <span>pawfind@email.com</span>
-            </li>
-          </ul>
-        </div>
-
-        {/* Follow Us */}
-        <div>
-          <h3 className="text-white font-semibold mb-5 text-lg">Follow Us</h3>
-          <div className="flex gap-4">
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-blue-600 transition-all text-white"
-            >
-              <FaFacebookF size={18} />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-pink-600 transition-all text-white"
-            >
-              <FaInstagram size={18} />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-sky-500 transition-all text-white"
-            >
-              <FaTwitter size={18} />
-            </a>
-            <a
-              href="#"
-              className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-red-600 transition-all text-white"
-            >
-              <FaYoutube size={18} />
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Divider and Copyright */}
-      <div className="mt-12 pt-8 border-t border-slate-800 text-center text-sm">
-        <p>&copy; 2024 PawFind. All rights reserved.</p>
-      </div>
-
-      {/* Floating Paw Button (Bottom Right) */}
-      <div className="absolute bottom-6 right-6">
-        <div className="w-12 h-12 bg-slate-700/50 rounded-full flex items-center justify-center shadow-lg border border-slate-600 opacity-60 hover:opacity-100 cursor-pointer transition-opacity">
-          <FaPaw size={24} className="text-white opacity-80" />
+        <div className="mt-12 md:mt-16 pt-6 md:pt-8 border-t border-white/5 flex justify-center items-center">
+          <p className="text-xs md:text-sm font-medium opacity-60 text-center">
+            &copy; {new Date().getFullYear()} PetNest. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

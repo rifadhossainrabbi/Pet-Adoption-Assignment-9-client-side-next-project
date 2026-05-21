@@ -9,194 +9,218 @@ import {
   ListBox,
   TextArea,
   Button,
-  RadioGroup,
-  Radio,
 } from '@heroui/react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+
+const speciesOptions = [
+  { id: 'dog', label: 'Dog' },
+  { id: 'cat', label: 'Cat' },
+  { id: 'rabbit', label: 'Rabbit' },
+  { id: 'bird', label: 'Bird' },
+];
+
+const healthOptions = [
+  { id: 'healthy', label: 'Healthy' },
+  { id: 'under-treatment', label: 'Under Treatment' },
+];
+
+const vaccineOptions = [
+  { id: 'vaccinated', label: 'Vaccinated' },
+  { id: 'not-vaccinated', label: 'Not Vaccinated' },
+];
 
 const AddPetPage = () => {
   const [isPending, setIsPending] = useState(false);
-
+  const router = useRouter();
   const { data: session, isPending: isAuthLoading } = authClient.useSession();
   const user = session?.user;
 
-  if (isAuthLoading) {
+  if (isAuthLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        Loading...
+      <div className="flex justify-center items-center min-h-[60vh]">
+        <div className="w-10 h-10 border-4 border-[#C084FC] border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
-  }
-  if (!user) {
-    return <div className="text-center py-20">Please login to add a pet.</div>;
-  }
+
+  if (!user)
+    return (
+      <div className="text-center py-20 text-gray-400 font-bold">
+        Please login to add a pet.
+      </div>
+    );
 
   const onSubmit = async e => {
     e.preventDefault();
+    setIsPending(true);
     const formdata = new FormData(e.currentTarget);
     const petData = Object.fromEntries(formdata.entries());
-    console.log(petData);
 
-      const completeData = {
-        ...petData,
-        ownerId: user.id, 
-        ownerName: user.name, 
-        ownerEmail: user.email,
-        createdAt: new Date(),
-        sotck: 'Available',
-      };
+    const completeData = {
+      ...petData,
+      ownerId: user.id,
+      ownerName: user.name,
+      ownerEmail: user.email,
+      createdAt: new Date(),
+      sotck: 'Available',
+    };
 
-    const res = await fetch('http://localhost:5000/pets', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(completeData),
-    });
-    const data = await res.json();
-    console.log(data);
-    toast.success('Successfully Done!');
+    try {
+      const res = await fetch('http://localhost:5000/pets', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(completeData),
+      });
+      const data = await res.json();
+      if (data.insertedId) {
+        toast.success('Pet listed successfully! 🐾');
+        router.push('/my-list'); // সাকসেস হলে লিস্ট পেজে নিয়ে যাবে
+      }
+    } catch {
+      toast.error('Something went wrong!');
+    } finally {
+      setIsPending(false);
+    }
   };
 
-  const speciesOptions = [
-    { id: 'dog', label: 'Dog' },
-    { id: 'cat', label: 'Cat' },
-    { id: 'rabbit', label: 'Rabbit' },
-    { id: 'bird', label: 'Bird' },
-  ];
-
-  const healthOptions = [
-    { id: 'healthy', label: 'Healthy' },
-    { id: 'under-treatment', label: 'Under Treatment' },
-  ];
-
-  const vaccineOptions = [
-    { id: 'vaccinated', label: 'Vaccinated' },
-    { id: 'not-vaccinated', label: 'Not Vaccinated' },
-  ];
-
   return (
-    <div className="p-6 md:p-10 bg-[#f8fafc] min-h-screen">
-      <h2 className="text-3xl font-extrabold text-center text-[#ff5a3d] mb-10 uppercase tracking-wider">
-        Add Pet Form
-      </h2>
-
-      <form
-        onSubmit={onSubmit}
-        className="max-w-6xl mx-auto bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 border border-gray-100 space-y-8"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Pet Name */}
-          <div className="md:col-span-1">
+    <div className="w-full flex justify-center">
+      {' '}
+      {/* কন্টেইনারকে সেন্টারে রাখার জন্য */}
+      <div className="w-full max-w-6xl">
+        {' '}
+        {/* ফর্মের সর্বোচ্চ উইডথ ৪-এক্স এল */}
+        <header className="mb-8 text-center lg:text-left">
+          <h2 className="text-3xl sm:text-4xl font-black text-white">
+            Add New Pet
+          </h2>
+          <p className="text-gray-500 mt-2">
+            Fill up the information to list a pet for adoption.
+          </p>
+        </header>
+        <form
+          onSubmit={onSubmit}
+          className="bg-white/5 border border-white/10 rounded-[2.5rem] p-6 sm:p-10 lg:p-12 space-y-6 shadow-2xl"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Pet Name */}
             <TextField name="PetName" isRequired>
-              <Label className="font-bold text-gray-700">Pet Name</Label>
-              <Input placeholder="Enter pet name" className="rounded-2xl" />
-              <FieldError />
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Pet Name
+              </Label>
+              <Input
+                placeholder="Enter pet name"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
+              />
+              <FieldError className="text-rose-400 text-xs mt-1" />
             </TextField>
-          </div>
 
-          {/* Species - Using Mapping */}
-          <div>
-            <Select
-              name="species"
-              isRequired
-              className="w-full"
-              placeholder="Select species"
-            >
-              <Label className="font-bold text-gray-700">Species</Label>
-              <Select.Trigger className="rounded-2xl h-10">
+            {/* Species */}
+            <Select name="species" isRequired placeholder="Select species">
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Species
+              </Label>
+              <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
                 <Select.Value />
-                <Select.Indicator />
+                <Select.Indicator className="mr-2" />
               </Select.Trigger>
               <Select.Popover>
-                <ListBox>
+                <ListBox className="bg-[#1A0B40] text-white p-2">
                   {speciesOptions.map(item => (
                     <ListBox.Item
                       key={item.id}
                       id={item.id}
                       textValue={item.label}
+                      className="rounded-lg hover:bg-[#C084FC]"
                     >
                       {item.label}
-                      <ListBox.ItemIndicator />
                     </ListBox.Item>
                   ))}
                 </ListBox>
               </Select.Popover>
             </Select>
-          </div>
 
-          {/* Breed */}
-          <TextField name="breed" isRequired>
-            <Label className="font-bold text-gray-700">Breed</Label>
-            <Input
-              placeholder="Enter breed (e.g. Golden Retriever)"
-              className="rounded-2xl"
-            />
-            <FieldError />
-          </TextField>
+            {/* Breed */}
+            <TextField name="breed" isRequired>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Breed
+              </Label>
+              <Input
+                placeholder="e.g. Golden Retriever"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
+              />
+              <FieldError />
+            </TextField>
 
-          {/* Age */}
-          <TextField name="age" isRequired>
-            <Label className="font-bold text-gray-700">Age</Label>
-            <Input
-              placeholder="Enter age (e.g. 2 years)"
-              className="rounded-2xl"
-            />
-            <FieldError />
-          </TextField>
+            {/* Age */}
+            <TextField name="age" isRequired>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Age
+              </Label>
+              <Input
+                placeholder="e.g. 2 years"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
+              />
+              <FieldError />
+            </TextField>
 
-          {/* Gender */}
-          <div className="flex flex-col gap-3">
-            <Label className="font-bold text-gray-700">Gender</Label>
-            <div className="flex gap-8 items-center h-10">
-              <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="male"
-                  className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
-                />
-                <span>Male</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer text-gray-700 font-medium">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="female"
-                  className="w-5 h-5 accent-[#ff5a3d] cursor-pointer"
-                />
-                <span>Female</span>
-              </label>
+            {/* Gender */}
+            <div className="flex flex-col gap-2">
+              <Label className="font-bold text-gray-300 text-sm mb-2">
+                Gender
+              </Label>
+              <div className="flex gap-8 items-center h-12">
+                <label className="flex items-center gap-2 cursor-pointer text-gray-300 group">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    className="w-5 h-5 accent-[#C084FC]"
+                    required
+                  />
+                  <span className="group-hover:text-[#C084FC] transition-colors">
+                    Male
+                  </span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer text-gray-300 group">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="female"
+                    className="w-5 h-5 accent-[#C084FC]"
+                  />
+                  <span className="group-hover:text-[#C084FC] transition-colors">
+                    Female
+                  </span>
+                </label>
+              </div>
             </div>
-          </div>
 
-          {/* Image URL */}
-          <TextField name="imageUrl" isRequired>
-            <Label className="font-bold text-gray-700">Image URL</Label>
-            <Input
-              type="url"
-              placeholder="https://example.com/pet.jpg"
-              className="rounded-2xl"
-            />
-            <FieldError />
-          </TextField>
+            {/* Image URL */}
+            <TextField name="imageUrl" isRequired>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Image URL
+              </Label>
+              <Input
+                type="url"
+                placeholder="https://imgbb.com/your-image.jpg"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
+              />
+              <FieldError />
+            </TextField>
 
-          {/* Health Status - Using Mapping */}
-          <div>
-            <Select
-              name="healthStatus"
-              isRequired
-              className="w-full"
-              placeholder="Select health status"
-            >
-              <Label className="font-bold text-gray-700">Health Status</Label>
-              <Select.Trigger className="rounded-2xl h-10">
+            {/* Health Status */}
+            <Select name="healthStatus" isRequired placeholder="Health status">
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Health Status
+              </Label>
+              <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
                 <Select.Value />
-                <Select.Indicator />
+                <Select.Indicator className="mr-2" />
               </Select.Trigger>
               <Select.Popover>
-                <ListBox>
+                <ListBox className="bg-[#1A0B40] text-white p-2">
                   {healthOptions.map(item => (
                     <ListBox.Item
                       key={item.id}
@@ -204,31 +228,27 @@ const AddPetPage = () => {
                       textValue={item.label}
                     >
                       {item.label}
-                      <ListBox.ItemIndicator />
                     </ListBox.Item>
                   ))}
                 </ListBox>
               </Select.Popover>
             </Select>
-          </div>
 
-          {/* Vaccination Status - Using Mapping */}
-          <div>
+            {/* Vaccination Status */}
             <Select
               name="vaccinationStatus"
               isRequired
-              className="w-full"
-              placeholder="Select status"
+              placeholder="Vaccination info"
             >
-              <Label className="font-bold text-gray-700">
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
                 Vaccination Status
               </Label>
-              <Select.Trigger className="rounded-2xl h-10">
+              <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
                 <Select.Value />
-                <Select.Indicator />
+                <Select.Indicator className="mr-2" />
               </Select.Trigger>
               <Select.Popover>
-                <ListBox>
+                <ListBox className="bg-[#1A0B40] text-white p-2">
                   {vaccineOptions.map(item => (
                     <ListBox.Item
                       key={item.id}
@@ -236,67 +256,76 @@ const AddPetPage = () => {
                       textValue={item.label}
                     >
                       {item.label}
-                      <ListBox.ItemIndicator />
                     </ListBox.Item>
                   ))}
                 </ListBox>
               </Select.Popover>
             </Select>
-          </div>
 
-          {/* Location */}
-          <TextField name="location" isRequired>
-            <Label className="font-bold text-gray-700">Location</Label>
-            <Input placeholder="Enter location" className="rounded-2xl" />
-            <FieldError />
-          </TextField>
-
-          {/* Adoption Fee */}
-          <TextField name="adoptionFee" type="number" isRequired>
-            <Label className="font-bold text-gray-700">
-              Adoption Fee (USD)
-            </Label>
-            <Input type="number" placeholder="50" className="rounded-2xl" />
-            <FieldError />
-          </TextField>
-
-          {/* Owner Email (Auto-filled) */}
-          <div className="md:col-span-2">
-            <TextField isReadOnly defaultValue={user?.email}>
-              <Label className="font-bold text-gray-400">
-                Owner Email (Fixed)
+            {/* Location */}
+            <TextField name="location" isRequired>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Location
               </Label>
               <Input
-                name="userEmail"
-                defaultValue={user?.email}
-                isReadOnly
-                className="rounded-2xl bg-gray-50 text-gray-400"
-              />
-            </TextField>
-          </div>
-
-          {/* Description */}
-          <div className="md:col-span-2">
-            <TextField name="description" isRequired>
-              <Label className="font-bold text-gray-700">Description</Label>
-              <TextArea
-                placeholder="Write something about the pet's personality..."
-                className="rounded-3xl min-h-[120px]"
+                placeholder="Enter city, country"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
               />
               <FieldError />
             </TextField>
-          </div>
-        </div>
 
-        {/* Submit Button */}
-        <Button
-          type="submit"
-          isLoading={isPending}
-          className="rounded-xl w-full bg-[#ff5a3d] text-white font-bold h-14 shadow-lg hover:bg-[#e84a2d] transition-all"
-        >
-          {isPending ? 'Adding Pet...' : '🐾 Add Pet'}
-        </Button>
-      </form>
+            {/* Adoption Fee */}
+            <TextField name="adoptionFee" isRequired>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                Adoption Fee (USD)
+              </Label>
+              <Input
+                type="number"
+                placeholder="50"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
+              />
+              <FieldError />
+            </TextField>
+
+            {/* Owner Email (Full Width) */}
+            <div className="md:col-span-2">
+              <TextField isReadOnly defaultValue={user?.email}>
+                <Label className="font-bold text-gray-500 text-sm mb-2 block">
+                  Owner Email (Fixed)
+                </Label>
+                <Input
+                  name="userEmail"
+                  defaultValue={user?.email}
+                  isReadOnly
+                  className="rounded-xl h-12 bg-white/5 border-white/10 text-gray-500 cursor-not-allowed"
+                />
+              </TextField>
+            </div>
+
+            {/* Description (Full Width) */}
+            <div className="md:col-span-2">
+              <TextField name="description" isRequired>
+                <Label className="font-bold text-gray-300 text-sm mb-2 block">
+                  Description
+                </Label>
+                <TextArea
+                  placeholder="Write about the pet's story and personality..."
+                  className="rounded-xl bg-white/5 border-white/10 text-white min-h-[150px] p-4"
+                />
+                <FieldError />
+              </TextField>
+            </div>
+          </div>
+
+          <Button
+            type="submit"
+            isLoading={isPending}
+            className="w-full bg-gradient-to-r from-[#C084FC] to-[#E879F9] text-white font-black h-14 rounded-2xl shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all text-lg"
+          >
+            {isPending ? 'Adding Pet...' : '🐾 Add Pet Listing'}
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };
