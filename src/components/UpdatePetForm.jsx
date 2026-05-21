@@ -47,6 +47,7 @@ const UpdatePetForm = ({ singlePet }) => {
     vaccinationStatus,
     _id,
   } = singlePet;
+  console.log(singlePet);
 
   const [isPending, setIsPending] = useState(false);
 
@@ -56,8 +57,9 @@ const UpdatePetForm = ({ singlePet }) => {
 
     const formdata = new FormData(e.currentTarget);
     const petData = Object.fromEntries(formdata.entries());
+    console.log(petData);
 
-    // Better-Auth Token collect
+    // Better-Auth Token
     const { data: tokenData } = await authClient.token();
 
     try {
@@ -71,14 +73,13 @@ const UpdatePetForm = ({ singlePet }) => {
       });
 
       if (res.ok) {
-        toast.success('Information updated successfully! 🐾');
+        toast.success('Updated successfully! 🐾');
         router.push('/my-list');
         router.refresh();
       } else {
-        toast.error('Failed to update pet');
+        toast.error('Failed to update');
       }
     } catch (error) {
-      console.error('Error:', error);
       toast.error('Something went wrong!');
     } finally {
       setIsPending(false);
@@ -91,9 +92,7 @@ const UpdatePetForm = ({ singlePet }) => {
         <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
           Update <span className="text-[#C084FC]">{PetName}</span>
         </h2>
-        <p className="text-gray-500 mt-2">
-          Modify any specific field and save changes.
-        </p>
+        <p className="text-gray-500 mt-2">Change any field or keep as it is.</p>
       </header>
 
       <form
@@ -107,7 +106,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Pet Name
             </Label>
             <Input
-              name="PetName"
+              name="PetName" // এটি যুক্ত করা হয়েছে
               defaultValue={PetName}
               placeholder="Enter pet name"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
@@ -116,7 +115,7 @@ const UpdatePetForm = ({ singlePet }) => {
 
           {/* Species */}
           <Select
-            name="species"
+            name="species" // এটি যুক্ত করা হয়েছে
             defaultSelectedKey={species?.toLowerCase()}
             placeholder="Select species"
           >
@@ -149,9 +148,8 @@ const UpdatePetForm = ({ singlePet }) => {
               Breed
             </Label>
             <Input
-              name="breed"
+              name="breed" // এটি যুক্ত করা হয়েছে
               defaultValue={breed}
-              placeholder="Enter breed"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
@@ -162,9 +160,8 @@ const UpdatePetForm = ({ singlePet }) => {
               Age
             </Label>
             <Input
-              name="age"
+              name="age" // এটি যুক্ত করা হয়েছে
               defaultValue={age}
-              placeholder="Enter age"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
@@ -204,9 +201,8 @@ const UpdatePetForm = ({ singlePet }) => {
               Image URL
             </Label>
             <Input
-              name="imageUrl"
+              name="imageUrl" // এটি যুক্ত করা হয়েছে
               defaultValue={imageUrl}
-              placeholder="Enter image link"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
@@ -273,9 +269,8 @@ const UpdatePetForm = ({ singlePet }) => {
               Location
             </Label>
             <Input
-              name="location"
+              name="location" // এটি যুক্ত করা হয়েছে
               defaultValue={location}
-              placeholder="Enter location"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
@@ -283,25 +278,24 @@ const UpdatePetForm = ({ singlePet }) => {
           {/* Adoption Fee */}
           <TextField defaultValue={adoptionFee}>
             <Label className="font-bold text-gray-300 text-sm mb-2 block">
-              Adoption Fee (USD)
+              Adoption Fee ($)
             </Label>
             <Input
-              name="adoptionFee"
-              defaultValue={adoptionFee}
+              name="adoptionFee" // এটি যুক্ত করা হয়েছে
               type="number"
-              placeholder="50"
+              defaultValue={adoptionFee}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
-          {/* Owner Email - READ ONLY */}
+          {/* Owner Email - ReadOnly */}
           <div className="md:col-span-2">
             <TextField isReadOnly defaultValue={ownerEmail}>
               <Label className="font-bold text-gray-500 text-sm mb-2 block">
-                Owner Email (Fixed)
+                Email (Read Only)
               </Label>
               <Input
-                name="ownerEmail"
+                name="ownerEmail" // এটি যুক্ত করা হয়েছে
                 defaultValue={ownerEmail}
                 isReadOnly
                 className="rounded-xl h-12 bg-white/5 border-white/10 text-gray-500 cursor-not-allowed"
@@ -316,9 +310,8 @@ const UpdatePetForm = ({ singlePet }) => {
                 Description
               </Label>
               <TextArea
-                name="description"
+                name="description" // এটি যুক্ত করা হয়েছে
                 defaultValue={description}
-                placeholder="Write description"
                 className="rounded-xl bg-white/5 border-white/10 text-white min-h-[120px] p-4"
               />
             </TextField>
@@ -328,7 +321,7 @@ const UpdatePetForm = ({ singlePet }) => {
         <Button
           type="submit"
           isLoading={isPending}
-          className="w-full bg-gradient-to-r from-[#C084FC] to-[#E879F9] text-white font-black h-14 rounded-2xl shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all text-lg"
+          className="w-full bg-gradient-to-r from-[#C084FC] to-[#E879F9] text-white font-black h-14 rounded-2xl shadow-lg transition-all text-lg"
         >
           {isPending ? 'Updating...' : '🐾 Save Changes'}
         </Button>
