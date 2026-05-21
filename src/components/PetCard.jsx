@@ -33,8 +33,18 @@ const PetCard = ({ pet }) => {
           <h3 className="text-sm sm:text-lg font-bold text-white truncate group-hover:text-purple-400 transition-colors">
             {pet.PetName}
           </h3>
-          <span className="text-[8px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black uppercase border border-green-500/50 text-green-400 bg-green-500/10 shrink-0">
-            {pet.sotck === 'Available' ? 'Live' : 'Sold'}
+          <span
+            className={`
+        text-[8px] sm:text-[10px] px-1.5 py-0.5 rounded-full font-black uppercase 
+         shrink-0 border 
+         ${
+           pet.sotck === 'Available'
+             ? 'border-green-500/50 text-green-400 bg-green-500/10'
+             : 'border-red-500/50 text-red-400 bg-red-500/10'
+         }
+  `}
+          >
+            {pet.sotck}
           </span>
         </div>
 
