@@ -66,16 +66,19 @@ const AddPetPage = () => {
       sotck: 'Available',
     };
 
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
+
     try {
       const res = await fetch('http://localhost:5000/pets', {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: { 'content-type': 'application/json',authorization:`Bearer ${tokenData?.token}` },
         body: JSON.stringify(completeData),
       });
       const data = await res.json();
       if (data.insertedId) {
         toast.success('Pet listed successfully! 🐾');
-        router.push('/my-list'); // সাকসেস হলে লিস্ট পেজে নিয়ে যাবে
+        router.push('/my-list'); 
       }
     } catch {
       toast.error('Something went wrong!');
@@ -87,10 +90,9 @@ const AddPetPage = () => {
   return (
     <div className="w-full flex justify-center">
       {' '}
-      {/* কন্টেইনারকে সেন্টারে রাখার জন্য */}
       <div className="w-full max-w-6xl">
         {' '}
-        {/* ফর্মের সর্বোচ্চ উইডথ ৪-এক্স এল */}
+
         <header className="mb-8 text-center lg:text-left">
           <h2 className="text-3xl sm:text-4xl font-black text-white">
             Add New Pet

@@ -1,11 +1,19 @@
 import AdoptionForm from '@/components/AdoptionForm';
 import PetDetails from '@/components/PetDetails';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 import React from 'react';
 
 const PetDetailsById = async ({ params }) => {
   const { id } = await params;
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  })
+  console.log(token)
   const res = await fetch(`http://localhost:5000/pets/${id}`, {
-    cache: 'no-store',
+    headers: {
+      authorization:`Bearer ${token}`
+    }
   });
   const singlePet = await res.json();
 

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import toast from 'react-hot-toast';
-import { authClient } from '@/lib/auth-client'; // আপনার লিভ ফোল্ডার থেকে পাথ ঠিক করে নিন
+import { authClient } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { PulseLoader } from 'react-spinners';
 
@@ -21,7 +21,6 @@ const LogInPage = () => {
   } = useForm();
 
   const handleLoginFunc = async data => {
-    console.log(data);
     setLoading(true);
     try {
       const { data: res, error } = await authClient.signIn.email({
@@ -51,63 +50,68 @@ const LogInPage = () => {
   };
 
   return (
-    <div className="container mx-auto min-h-[90vh] flex justify-center items-center p-4">
-      <div className="p-8 rounded-2xl bg-white border border-gray-100 shadow-2xl w-full max-w-md transition-all duration-300 hover:border-amber-400">
+    <div className="min-h-screen bg-[#050211] flex justify-center items-center p-4 relative overflow-hidden">
+      {/* ব্যাকগ্রাউন্ড ডেকোরেশন (ব্যানারের মতো গ্লো) */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-600/10 blur-[120px] rounded-full"></div>
+
+      <div className="p-8 sm:p-12 rounded-[32px] bg-[#120D26]/60 backdrop-blur-xl border border-white/5 shadow-2xl w-full max-w-md transition-all duration-300 hover:border-purple-500/30 relative z-10">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h2 className="text-3xl font-black mb-2">
-            <span className="bg-gradient-to-r from-amber-600 to-orange-500 bg-clip-text text-transparent">
-              Welcome Back
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-black mb-3 text-white tracking-tight">
+            Welcome{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C084FC] to-[#E879F9]">
+              Back
             </span>
           </h2>
-          <p className="text-gray-500 text-sm">
-            Please enter your details to login
+          <p className="text-gray-400 text-sm font-medium opacity-80">
+            Sign in to continue your pet adoption journey
           </p>
         </div>
 
         {/* Form */}
-        <form className="space-y-5" onSubmit={handleSubmit(handleLoginFunc)}>
+        <form className="space-y-6" onSubmit={handleSubmit(handleLoginFunc)}>
           {/* Email field */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-bold text-gray-700 ml-1">
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">
               Email Address
             </label>
             <input
               type="email"
-              className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
+              className={`w-full px-5 py-4 rounded-2xl bg-white/5 border outline-none transition-all text-white placeholder:text-gray-600 ${
                 errors.email
-                  ? 'border-red-500 bg-red-50'
-                  : 'border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                  ? 'border-red-500 bg-red-500/5'
+                  : 'border-white/10 focus:border-[#C084FC] focus:ring-2 focus:ring-[#C084FC]/20'
               }`}
               placeholder="name@example.com"
               {...register('email', { required: 'Email is required' })}
             />
             {errors.email && (
-              <span className="text-red-500 text-xs ml-1">
+              <span className="text-red-400 text-xs ml-1 font-bold">
                 {errors.email.message}
               </span>
             )}
           </div>
 
           {/* Password field */}
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-bold text-gray-700 ml-1">
+          <div className="flex flex-col gap-2">
+            <label className="text-xs font-black text-gray-500 uppercase tracking-widest ml-1">
               Password
             </label>
             <div className="relative">
               <input
                 type={isShowPassword ? 'text' : 'password'}
-                className={`w-full px-4 py-3 rounded-xl border outline-none transition-all ${
+                className={`w-full px-5 py-4 rounded-2xl bg-white/5 border outline-none transition-all text-white placeholder:text-gray-600 ${
                   errors.password
-                    ? 'border-red-500 bg-red-50'
-                    : 'border-gray-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200'
+                    ? 'border-red-500 bg-red-500/5'
+                    : 'border-white/10 focus:border-[#C084FC] focus:ring-2 focus:ring-[#C084FC]/20'
                 }`}
                 placeholder="••••••••"
                 {...register('password', { required: 'Password is required' })}
               />
               <button
                 type="button"
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-amber-600 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#C084FC] transition-colors"
                 onClick={() => setIsShowPassword(!isShowPassword)}
               >
                 {isShowPassword ? (
@@ -118,7 +122,7 @@ const LogInPage = () => {
               </button>
             </div>
             {errors.password && (
-              <span className="text-red-500 text-xs ml-1">
+              <span className="text-red-400 text-xs ml-1 font-bold">
                 {errors.password.message}
               </span>
             )}
@@ -127,23 +131,23 @@ const LogInPage = () => {
           {/* Login Button */}
           <button
             disabled={loading}
-            className={`w-full py-3.5 rounded-xl text-white font-bold text-lg shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 ${
+            className={`w-full py-4.5 h-14 rounded-2xl text-white font-black text-lg shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 ${
               loading
-                ? 'bg-gray-400 cursor-not-allowed'
-                : 'bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 shadow-amber-200'
+                ? 'bg-gray-700 cursor-not-allowed'
+                : 'bg-gradient-to-r from-[#F27121] via-[#E94057] to-[#8A2387] shadow-pink-500/20 hover:shadow-pink-500/40'
             }`}
           >
-            {loading ? <PulseLoader /> : 'Sign In'}
+            {loading ? <PulseLoader size={10} color="#fff" /> : 'Sign In'}
           </button>
         </form>
 
         {/* Divider */}
-        <div className="relative my-8">
+        <div className="relative my-10">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200"></div>
+            <div className="w-full border-t border-white/10"></div>
           </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-3 bg-white text-gray-400 font-medium italic">
+          <div className="relative flex justify-center text-sm font-bold uppercase tracking-tighter">
+            <span className="px-4 bg-[#120D26] text-gray-500 italic">
               Or continue with
             </span>
           </div>
@@ -152,18 +156,18 @@ const LogInPage = () => {
         {/* Google Login Button */}
         <button
           onClick={handleGoogleSignIn}
-          className="w-full flex justify-center items-center gap-3 px-4 py-3 border-2 border-gray-100 rounded-xl font-bold text-gray-700 hover:bg-gray-50 hover:border-amber-200 transition-all active:scale-95"
+          className="w-full flex justify-center items-center gap-3 px-5 py-4 border border-white/10 rounded-2xl font-bold text-gray-300 bg-white/5 hover:bg-white/10 hover:border-[#C084FC]/30 transition-all active:scale-95 shadow-sm"
         >
-          <FcGoogle size={22} />
+          <FcGoogle size={24} />
           <span>Google Account</span>
         </button>
 
         {/* Footer Link */}
-        <p className="mt-8 text-center text-sm text-gray-600 font-medium">
+        <p className="mt-10 text-center text-sm text-gray-500 font-bold">
           Don&apos;t have an account?{' '}
           <Link
             href="/register"
-            className="text-amber-600 font-bold hover:text-amber-700 underline underline-offset-4"
+            className="text-[#C084FC] hover:text-[#E879F9] underline underline-offset-8 transition-colors"
           >
             Register Now
           </Link>
