@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { FaPaw, FaPlayCircle } from 'react-icons/fa';
 import { HiArrowRight } from 'react-icons/hi';
+import Link from 'next/link';
 
 const Banner = () => {
   return (
@@ -46,9 +47,11 @@ const Banner = () => {
 
             {/* buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <button className="w-full sm:w-auto bg-gradient-to-r from-[#F27121] via-[#E94057] to-[#8A2387] text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-2xl shadow-pink-500/20 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
-                Adopt Now <HiArrowRight />
-              </button>
+              <Link href={'/all-pets'}>
+                <button className="w-full sm:w-auto bg-gradient-to-r from-[#F27121] via-[#E94057] to-[#8A2387] text-white px-10 py-5 rounded-2xl font-bold text-lg shadow-2xl shadow-pink-500/20 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3">
+                  Adopt Now <HiArrowRight />
+                </button>
+              </Link>
 
               <button className="w-full sm:w-auto group flex items-center justify-center gap-3 text-white font-bold text-lg px-8 py-5 rounded-2xl border border-white/10 hover:bg-white/5 transition-all">
                 <FaPlayCircle className="text-2xl text-[#C084FC] group-hover:text-white transition-colors" />
@@ -57,16 +60,13 @@ const Banner = () => {
             </div>
           </div>
 
-
           <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center lg:justify-end relative">
             {/* card container */}
             <div className="relative w-[300px] sm:w-[420px] lg:w-[480px] xl:w-[520px]">
-
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 via-pink-500/20 to-orange-500/10 blur-2xl rounded-3xl scale-110"></div>
 
               {/* main card */}
               <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl shadow-black/50">
-
                 <div className="absolute inset-0 bg-gradient-to-b from-purple-900/20 via-transparent to-pink-900/30"></div>
 
                 {/* image pet */}
@@ -79,10 +79,8 @@ const Banner = () => {
                   priority
                 />
 
-
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#1A0B40]/60 to-transparent z-20"></div>
               </div>
-
 
               <div className="absolute -bottom-4 -right-4 sm:-right-6 z-30 bg-black/60 backdrop-blur-xl border border-white/10 p-4 sm:p-5 rounded-3xl flex items-center gap-4 shadow-2xl animate-bounce duration-[4000ms]">
                 <div className="flex -space-x-3">

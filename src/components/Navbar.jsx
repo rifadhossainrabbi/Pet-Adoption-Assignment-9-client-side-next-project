@@ -186,13 +186,6 @@ const Navbar = () => {
 
             {user && (
               <>
-                <Link
-                  href="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-lg font-semibold text-gray-300"
-                >
-                  Dashboard
-                </Link>
 
                 <button
                   onClick={handleSignOut}
