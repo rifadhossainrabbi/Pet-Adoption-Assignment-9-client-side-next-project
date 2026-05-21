@@ -1,24 +1,30 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { AlertDialog, Button } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { FaTrashAlt } from 'react-icons/fa';
-
 
 export function CancleModal({ myRequests, status }) {
   console.log(status);
   const router = useRouter();
   console.log(myRequests);
   const handleCancle = async () => {
-    if (status !== "approved") {
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
+    if (status !== 'approved') {
       try {
-        const res = await fetch(`http://localhost:5000/request/${myRequests}`, {
-          method: 'DELETE',
-          headers: {
-            'content-type': 'application/json',
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER}/request/${myRequests}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${tokenData?.token}`,
+            },
           },
-        });
+        );
         const data = await res.json();
 
         if (res.ok) {

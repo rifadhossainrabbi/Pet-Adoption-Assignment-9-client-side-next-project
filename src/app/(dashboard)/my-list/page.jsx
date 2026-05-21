@@ -2,12 +2,12 @@ import MyLIstCard from '@/components/MyLIstCard';
 import React from 'react';
 
 const MyListPage = async () => {
-  const resPets = await fetch('http://localhost:5000/pets', {
+  const resPets = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pets`, {
     cache: 'no-store',
   });
   const allPets = await resPets.json();
 
-  const resReq = await fetch('http://localhost:5000/request', {
+  const resReq = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/request`, {
     cache: 'no-store',
   });
   const clientRequests = await resReq.json();

@@ -63,7 +63,7 @@ const PetCareTips = () => {
   return (
     <section className="bg-[#050211] py-16 space-y-12">
       <div className="container mx-auto px-4 md:px-0">
-        {/* --- Section 1: Pet Care Tips (ডার্ক গ্লাস কন্টেইনার) --- */}
+        {/* Pet Care Tips  */}
         <div className="bg-[#120D26]/60 backdrop-blur-xl rounded-[40px] p-10 md:p-16 border border-white/5 shadow-2xl">
           <h2 className="text-2xl md:text-4xl font-black text-white mb-16 text-center md:text-left">
             Pet Care Tips
@@ -75,7 +75,7 @@ const PetCareTips = () => {
                 key={index}
                 className="flex flex-col items-center text-center group"
               >
-                {/* আইকন বক্স ছবির মতো ডার্ক সার্কেল */}
+                {/* icon box */}
                 <div
                   className={`w-20 h-20 rounded-full flex items-center justify-center mb-6 bg-black/40 border border-white/10 transition-all duration-500 group-hover:scale-110 ${tip.glow}`}
                 >
@@ -96,7 +96,7 @@ const PetCareTips = () => {
           </div>
         </div>
 
-        {/* --- Section 2: Shelter Partners (আলাদা গ্লাস কন্টেইনার) --- */}
+        {/* Shelter Partners */}
         <div className="mt-12 bg-[#120D26]/40 backdrop-blur-md rounded-[40px] p-10 border border-white/5">
           <h2 className="text-xl md:text-3xl font-black text-white mb-12">
             Shelter Partners
@@ -108,7 +108,7 @@ const PetCareTips = () => {
                 key={index}
                 className="flex flex-col items-center text-center group cursor-pointer"
               >
-                {/* লোগো সার্কেল */}
+                {/* logo circle */}
                 <div
                   className={`${partner.bg} w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110 border border-white/5 shadow-lg shadow-black/20`}
                 >

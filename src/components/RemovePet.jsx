@@ -1,5 +1,6 @@
 'use client';
 
+import { authClient } from '@/lib/auth-client';
 import { AlertDialog, Button } from '@heroui/react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
@@ -9,13 +10,19 @@ export function RemovePet({ petId }) {
   const router = useRouter();
 
   const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
     try {
-      const res = await fetch(`http://localhost:5000/pets/${petId}`, {
-        method: 'DELETE',
-        headers: {
-          'content-type': 'application/json',
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/pets/${petId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${tokenData?.token}`,
+          },
         },
-      });
+      );
       const data = await res.json();
 
       if (res.ok) {

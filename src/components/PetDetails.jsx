@@ -13,7 +13,7 @@ const PetDetails = ({ singlePet }) => {
   return (
     <div className="bg-[#120D26]/60 backdrop-blur-xl border border-white/5 rounded-[40px] p-6 md:p-10 h-full shadow-2xl flex flex-col">
       <div className="flex flex-col md:flex-row gap-10">
-        {/* পেট ইমেজ */}
+        {/* pet image */}
         <div className="w-full md:w-1/2">
           <div className="relative aspect-square w-full rounded-[32px] overflow-hidden border border-white/10 shadow-lg">
             <Image
@@ -26,7 +26,7 @@ const PetDetails = ({ singlePet }) => {
           </div>
         </div>
 
-        {/* পেট ইনফো - ডান দিক */}
+        {/* pet icon */}
         <div className="w-full md:w-1/2 flex flex-col justify-center">
           <div className="inline-flex items-center gap-2 bg-[#C084FC]/10 text-[#C084FC] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4 w-fit">
             <FaDog /> {singlePet.species}
@@ -71,7 +71,7 @@ const PetDetails = ({ singlePet }) => {
         </div>
       </div>
 
-      {/* ডেসক্রিপশন সেকশন */}
+      {/* description  */}
       <div className="mt-12 pt-10 border-t border-white/5 flex-grow">
         <h3 className="text-2xl font-black text-white mb-4">
           About {singlePet.PetName}
@@ -80,7 +80,7 @@ const PetDetails = ({ singlePet }) => {
           {singlePet.description}
         </p>
 
-        {/* হেলথ স্ট্যাটাস */}
+        {/* health status */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/5 group hover:bg-white/10 transition-all">
             <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center text-green-400">

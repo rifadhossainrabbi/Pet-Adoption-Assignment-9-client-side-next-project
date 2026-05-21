@@ -12,6 +12,7 @@ import {
   FaUserCircle,
 } from 'react-icons/fa';
 import { RemovePet } from './RemovePet';
+import { authClient } from '@/lib/auth-client';
 
 const MyListPetCard = ({ pet, clientRequests }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,17 +23,28 @@ const MyListPetCard = ({ pet, clientRequests }) => {
   );
 
   const handleStatusUpdate = async (requestId, newStatus) => {
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
     try {
-      const res = await fetch(`http://localhost:5000/request/${requestId}`, {
-        method: 'PATCH',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ status: newStatus }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/request/${requestId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify({ status: newStatus }),
+        },
+      );
       if (res.ok) {
         if (newStatus === 'approved') {
-          await fetch(`http://localhost:5000/pets/${pet._id}`, {
+          await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pets/${pet._id}`, {
             method: 'PATCH',
-            headers: { 'content-type': 'application/json' },
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${tokenData?.token}`,
+            },
             body: JSON.stringify({ sotck: 'Adopted' }),
           });
         }

@@ -32,10 +32,16 @@ const AdoptionForm = ({ singlePet }) => {
       status: 'pending',
     };
 
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
+
     try {
-      const res = await fetch('http://localhost:5000/request', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/request`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json' },
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${tokenData?.token}`,
+        },
         body: JSON.stringify(completeData),
       });
       const result = await res.json();

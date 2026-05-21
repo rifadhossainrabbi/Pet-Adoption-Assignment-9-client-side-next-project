@@ -34,7 +34,7 @@ const AdoptionProcess = () => {
   return (
     <section className="bg-[#050211] py-16">
       <div className="container mx-auto px-4 md:px-0">
-        {/* মেইন গ্লাস-মরফিজম কন্টেইনার */}
+        {/* main container */}
         <div className="bg-[#120D26]/60 backdrop-blur-xl rounded-[40px] p-10 md:p-16 border border-white/5 shadow-2xl">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-16 text-center md:text-left">
             Adoption{' '}
@@ -43,17 +43,17 @@ const AdoptionProcess = () => {
             </span>
           </h2>
 
-          {/* স্টেপস ফ্লো */}
+          {/* steps */}
           <div className="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-4">
             {steps.map((step, index) => (
               <React.Fragment key={index}>
-                {/* প্রতিটি স্টেপ */}
+                {/* each step */}
                 <div className="flex flex-col items-center text-center group w-full md:w-auto">
-                  {/* আইকন সার্কেল উইথ নিয়ন গ্লো */}
+
                   <div
                     className={`relative w-24 h-24 bg-white/5 border border-white/10 rounded-full flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${step.glow}`}
                   >
-                    {/* ব্যাকগ্রাউন্ডে হালকা ব্লোব আলো */}
+                    {/* backgorund */}
                     <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-full"></div>
 
                     <div
@@ -63,20 +63,20 @@ const AdoptionProcess = () => {
                     </div>
                   </div>
 
-                  {/* টাইটেল */}
+                  {/* title */}
                   <h3 className="text-gray-200 font-bold text-lg md:text-xl whitespace-nowrap group-hover:text-purple-400 transition-colors">
                     {step.title}
                   </h3>
                 </div>
 
-                {/* ডেক্সটপ অ্যারো (Arrows) */}
+                {/* desktop arrow */}
                 {index !== steps.length - 1 && (
                   <div className="hidden md:block text-purple-500/30 text-4xl mb-12 animate-pulse">
                     <HiOutlineArrowNarrowRight />
                   </div>
                 )}
 
-                {/* মোবাইল অ্যারো (Arrows) */}
+                {/* mobile arrow */}
                 {index !== steps.length - 1 && (
                   <div className="md:hidden text-purple-500/30 text-3xl rotate-90 my-2 animate-pulse">
                     <HiOutlineArrowNarrowRight />

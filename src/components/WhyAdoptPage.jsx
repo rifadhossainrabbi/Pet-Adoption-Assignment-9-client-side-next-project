@@ -5,12 +5,12 @@ const WhyAdoptPage = () => {
   return (
     <section className="bg-[#050211] py-16 md:py-24">
       <div className="container mx-auto px-4">
-        {/* মেইন কন্টেইনার - ডার্ক গ্লাস ইফেক্ট */}
+        {/* main container */}
         <div className="relative overflow-hidden bg-[#120D26]/60 backdrop-blur-xl rounded-[40px] md:rounded-[60px] border border-white/5 flex flex-col md:flex-row items-center justify-between shadow-2xl">
-          {/* ব্যাকগ্রাউন্ড ডেকোরেশন (হালকা গ্লো) */}
+          {/* background */}
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
 
-          {/* বাম দিকের কন্টেন্ট */}
+          {/* left side */}
           <div className="relative z-20 w-full md:w-1/2 px-8 md:pl-20 py-16 text-center md:text-left">
             <h2 className="text-4xl md:text-6xl font-black text-white leading-tight mb-8">
               Why Adopt <br />
@@ -26,7 +26,7 @@ const WhyAdoptPage = () => {
                 a second chance at life.
               </p>
 
-              {/* ছোট চেকলিস্ট (অপশনাল কিন্তু ছবির ভাইব দেয়) */}
+              {/* optional checklist */}
               <div className="flex flex-col gap-3 items-center md:items-start text-gray-300">
                 <div className="flex items-center gap-2">
                   <span className="text-[#FF4D8D]">✦</span>
@@ -43,15 +43,15 @@ const WhyAdoptPage = () => {
               </div>
             </div>
 
-            {/* ছবির মতো গ্রেডিয়েন্ট বাটন */}
+
             <button className="bg-gradient-to-r from-[#FF4D8D] to-[#F27121] hover:opacity-90 text-white px-12 py-5 rounded-2xl font-black text-xl shadow-xl shadow-pink-500/20 transition-all transform hover:scale-105 active:scale-95 uppercase tracking-wide">
               Learn More
             </button>
           </div>
 
-          {/* ডান দিকের ইমেজ (নিচে এলাইন করা) */}
+
           <div className="relative z-10 w-full md:w-1/2 h-full flex items-end justify-center md:justify-end mt-10 md:mt-0 px-4 md:px-0">
-            {/* ইমেজের পেছনে গ্লো ইফেক্ট */}
+
             <div className="absolute bottom-0 right-0 w-[100%] h-[80%] bg-orange-500/10 blur-[100px] rounded-full"></div>
 
             <div className="relative w-[400px] sm:w-[400px] md:w-[500px] lg:w-[600px] aspect-square flex items-end">
@@ -64,7 +64,6 @@ const WhyAdoptPage = () => {
                 priority
               />
 
-              {/* ফ্লোটিং স্টার ও প-প্রিন্ট (ছবির ডেকোরেশন) */}
               <div className="absolute top-[20%] left-[-10%] animate-bounce duration-[4000ms] hidden lg:block">
                 <span className="text-4xl opacity-30 rotate-[-15deg] inline-block">
                   ✨

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import PetCard from './PetCard';
 
 const FeaturedPets = async () => {
-  const res = await fetch('http://localhost:5000/pets', { cache: 'no-store' });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pets`, { cache: 'no-store' });
   const allPets = await res.json();
   const displayPets = allPets.slice(0, 6);
 

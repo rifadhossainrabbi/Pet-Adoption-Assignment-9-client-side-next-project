@@ -10,6 +10,22 @@ const RequestCard = ({ clientRequest }) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
 
+  if (isPending) {
+    return (
+      <div className="p-10 text-center text-white">
+        Loading your requests...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="p-10 text-center text-white">
+        Please login to see requests.
+      </div>
+    );
+  }
+
   const myRequests =
     clientRequest?.filter(req => req.email === user?.email) || [];
 

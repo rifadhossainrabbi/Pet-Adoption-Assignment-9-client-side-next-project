@@ -1,56 +1,74 @@
+'use client';
 import Link from 'next/link';
+import { FaPaw, FaHome, FaSearch } from 'react-icons/fa';
 
 const NotFoundPage = () => {
   return (
-    <div className="min-h-[85vh] flex flex-col items-center justify-center bg-white px-6 text-center relative overflow-hidden">
-      {/* Pet icon */}
-      <div className="relative mb-6">
-        <div className="text-[130px] md:text-[180px] leading-none select-none">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#050211] px-6 text-center relative overflow-hidden">
+      {/* background decoration */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-600/10 blur-[120px] rounded-full"></div>
+
+      {/* main icon */}
+      <div className="relative mb-8 z-10">
+        <div className="text-[120px] md:text-[160px] leading-none select-none filter drop-shadow-[0_0_20px_rgba(192,132,252,0.3)]">
           😿
         </div>
-        {/* bubble */}
-        <div className="absolute -top-4 -right-4 bg-[#FF7043] text-white text-xs md:text-sm font-bold px-4 py-1.5 rounded-full rotate-12 shadow-lg animate-pulse">
-          Woof! I'm lost...
+        {/* tag bubble */}
+        <div className="absolute -top-2 -right-8 md:-top-4 md:-right-12 bg-gradient-to-r from-[#F27121] to-[#E94057] text-white text-[10px] md:text-xs font-black px-4 py-2 rounded-full rotate-12 shadow-lg animate-bounce">
+          Woof! I&apos;m lost...
         </div>
       </div>
 
-      {/* Main Content */}
-      <h1 className="text-7xl md:text-9xl font-black text-gray-100 mb-2">
+      {/* 404 text blur */}
+      <h1 className="text-[100px] md:text-[200px] font-black text-white/5 absolute pointer-events-none select-none tracking-tighter">
         404
       </h1>
 
-      <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4">
-        Oops! Page Not Found
-      </h2>
+      {/* text content */}
+      <div className="relative z-10 max-w-2xl">
+        <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
+          Oops! Page{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#C084FC] to-[#E879F9]">
+            Not Found
+          </span>
+        </h2>
 
-      <p className="text-gray-500 max-w-lg mx-auto mb-10 text-lg leading-relaxed">
-        The page you are looking for has wandered off like a curious puppy.
-        Don't worry, we can help you find your way back to your furry friends!
-      </p>
+        <p className="text-gray-400 text-base md:text-lg mb-10 leading-relaxed opacity-80 px-4">
+          The page you are looking for has wandered off like a curious puppy.
+          Don&apos;t worry, we can help you find your way back to your furry
+          friends!
+        </p>
 
-      {/* Call to Action Buttons */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-4 z-10">
-        <Link
-          href="/"
-          className="bg-[#FF7043] hover:bg-[#e65a2d] text-white px-10 py-4 rounded-full font-bold text-lg transition-all transform hover:scale-105 shadow-xl flex items-center gap-2"
-        >
-          <span>🏠</span> Back to Home
-        </Link>
+        {/* buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4">
+          <Link
+            href="/"
+            className="w-full sm:w-auto bg-gradient-to-r from-[#F27121] via-[#E94057] to-[#8A2387] text-white px-10 py-4 rounded-2xl font-black text-sm md:text-base transition-all transform hover:scale-105 shadow-xl shadow-pink-500/20 flex items-center justify-center gap-3 uppercase tracking-wider"
+          >
+            <FaHome size={18} /> Back to Home
+          </Link>
 
-        <Link
-          href="/all-pets"
-          className="border-2 border-gray-200 hover:border-[#FF7043] hover:text-[#FF7043] text-gray-600 px-10 py-4 rounded-full font-bold text-lg transition-all"
-        >
-          Browse All Pets 🐾
-        </Link>
+          <Link
+            href="/all-pets"
+            className="w-full sm:w-auto bg-white/5 border border-white/10 hover:bg-white/10 text-gray-200 px-10 py-4 rounded-2xl font-black text-sm md:text-base transition-all flex items-center justify-center gap-3 uppercase tracking-wider backdrop-blur-sm"
+          >
+            <FaSearch size={16} className="text-[#C084FC]" /> Browse Pets
+          </Link>
+        </div>
       </div>
 
-      {/* Background Decorative Paw Prints */}
-      <div className="absolute bottom-10 left-10 opacity-[0.03] hidden lg:block rotate-12 pointer-events-none">
-        <span className="text-[200px]">🐾</span>
+      {/* background paw print */}
+      <div className="absolute bottom-10 left-[-5%] md:left-10 opacity-[0.03] rotate-12 pointer-events-none">
+        <FaPaw size={250} className="text-white" />
       </div>
-      <div className="absolute top-20 right-10 opacity-[0.03] hidden lg:block -rotate-12 pointer-events-none">
-        <span className="text-[150px]">🐾</span>
+      <div className="absolute top-20 right-[-5%] md:right-10 opacity-[0.03] -rotate-12 pointer-events-none">
+        <FaPaw size={180} className="text-white" />
+      </div>
+
+      {/* floating heart*/}
+      <div className="absolute top-1/4 left-1/4 animate-pulse opacity-20 hidden md:block">
+        <span className="text-4xl text-pink-500">❤️</span>
       </div>
     </div>
   );

@@ -70,9 +70,12 @@ const AddPetPage = () => {
     console.log(tokenData);
 
     try {
-      const res = await fetch('http://localhost:5000/pets', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER}/pets`, {
         method: 'POST',
-        headers: { 'content-type': 'application/json',authorization:`Bearer ${tokenData?.token}` },
+        headers: {
+          'content-type': 'application/json',
+          authorization: `Bearer ${tokenData?.token}`,
+        },
         body: JSON.stringify(completeData),
       });
       const data = await res.json();
@@ -304,7 +307,7 @@ const AddPetPage = () => {
               </TextField>
             </div>
 
-            {/* Description (Full Width) */}
+            {/* Description */}
             <div className="md:col-span-2">
               <TextField name="description" isRequired>
                 <Label className="font-bold text-gray-300 text-sm mb-2 block">

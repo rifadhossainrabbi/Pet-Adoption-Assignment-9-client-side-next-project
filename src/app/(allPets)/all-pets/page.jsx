@@ -3,13 +3,12 @@ import SearchFilterSort from '@/components/SearchFilterSort';
 import React from 'react';
 
 const AllPetsPage = async ({ searchParams }) => {
-  // searchParams থেকে ভ্যালু বের করা
   const params = await searchParams;
   const search = params?.search || '';
   const species = params?.species || 'all';
 
   const res = await fetch(
-    `http://localhost:5000/pets?search=${search}&species=${species}`,
+    `${process.env.NEXT_PUBLIC_SERVER}/pets?search=${search}&species=${species}`,
     {
       method: 'GET',
       headers: {
