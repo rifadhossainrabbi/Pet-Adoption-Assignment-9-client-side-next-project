@@ -67,7 +67,7 @@ const PetCard = ({ pet }) => {
             size="sm"
             className="font-bold text-[10px] sm:text-xs text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg sm:rounded-xl h-8 sm:h-10"
           >
-            Info
+            Details
           </Button>
         </Link>
         <Link href={`/all-pets/${pet._id}`}>
