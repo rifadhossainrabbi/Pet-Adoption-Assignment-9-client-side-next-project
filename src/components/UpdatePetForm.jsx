@@ -53,9 +53,11 @@ const UpdatePetForm = ({ singlePet }) => {
   const onSubmit = async e => {
     e.preventDefault();
     setIsPending(true);
+
     const formdata = new FormData(e.currentTarget);
     const petData = Object.fromEntries(formdata.entries());
 
+    // Better-Auth Token collect
     const { data: tokenData } = await authClient.token();
 
     try {
@@ -76,6 +78,7 @@ const UpdatePetForm = ({ singlePet }) => {
         toast.error('Failed to update pet');
       }
     } catch (error) {
+      console.error('Error:', error);
       toast.error('Something went wrong!');
     } finally {
       setIsPending(false);
@@ -83,36 +86,46 @@ const UpdatePetForm = ({ singlePet }) => {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto">
-      <h2 className="text-2xl sm:text-3xl font-black text-white mb-6">
-        Update: <span className="text-[#C084FC]">{PetName}</span>
-      </h2>
+    <div className="p-4 sm:p-6 lg:p-8 max-w-5xl mx-auto min-h-screen">
+      <header className="mb-8 text-center lg:text-left">
+        <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tight">
+          Update <span className="text-[#C084FC]">{PetName}</span>
+        </h2>
+        <p className="text-gray-500 mt-2">
+          Modify any specific field and save changes.
+        </p>
+      </header>
 
       <form
         onSubmit={onSubmit}
-        className="bg-[#120D26]/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-8 lg:p-10 space-y-6 shadow-2xl"
+        className="bg-[#120D26]/60 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-6 sm:p-10 lg:p-12 space-y-8 shadow-2xl"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {/* Pet Name  */}
-          <TextField name="PetName" defaultValue={PetName}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Pet Name */}
+          <TextField defaultValue={PetName}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Pet Name
             </Label>
             <Input
+              name="PetName"
               defaultValue={PetName}
               placeholder="Enter pet name"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
-          {/* Species  */}
-          <Select name="species" defaultSelectedKey={species?.toLowerCase()}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          {/* Species */}
+          <Select
+            name="species"
+            defaultSelectedKey={species?.toLowerCase()}
+            placeholder="Select species"
+          >
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Species
             </Label>
-            <Select.Trigger className="rounded-xl h-10 bg-white/5 border-white/10 text-white">
+            <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
               <Select.Value />
-              <Select.Indicator />
+              <Select.Indicator className="mr-2" />
             </Select.Trigger>
             <Select.Popover>
               <ListBox className="bg-[#1A0B40] text-white p-2">
@@ -131,50 +144,54 @@ const UpdatePetForm = ({ singlePet }) => {
           </Select>
 
           {/* Breed */}
-          <TextField name="breed" defaultValue={breed}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <TextField defaultValue={breed}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Breed
             </Label>
             <Input
+              name="breed"
               defaultValue={breed}
               placeholder="Enter breed"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
           {/* Age */}
-          <TextField name="age" defaultValue={age}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <TextField defaultValue={age}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Age
             </Label>
             <Input
+              name="age"
               defaultValue={age}
               placeholder="Enter age"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
           {/* Gender */}
           <div className="flex flex-col gap-2">
-            <Label className="font-bold text-gray-300 text-sm">Gender</Label>
-            <div className="flex gap-6 items-center h-10">
-              <label className="flex items-center gap-2 cursor-pointer text-gray-300 font-medium">
+            <Label className="font-bold text-gray-300 text-sm mb-2">
+              Gender
+            </Label>
+            <div className="flex gap-8 items-center h-12">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-300">
                 <input
                   type="radio"
                   name="gender"
                   value="male"
                   defaultChecked={gender === 'male'}
-                  className="w-4 h-4 accent-[#C084FC]"
+                  className="w-5 h-5 accent-[#C084FC]"
                 />
                 <span>Male</span>
               </label>
-              <label className="flex items-center gap-2 cursor-pointer text-gray-300 font-medium">
+              <label className="flex items-center gap-2 cursor-pointer text-gray-300">
                 <input
                   type="radio"
                   name="gender"
                   value="female"
                   defaultChecked={gender === 'female'}
-                  className="w-4 h-4 accent-[#C084FC]"
+                  className="w-5 h-5 accent-[#C084FC]"
                 />
                 <span>Female</span>
               </label>
@@ -182,14 +199,15 @@ const UpdatePetForm = ({ singlePet }) => {
           </div>
 
           {/* Image URL */}
-          <TextField name="imageUrl" defaultValue={imageUrl}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <TextField defaultValue={imageUrl}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Image URL
             </Label>
             <Input
+              name="imageUrl"
               defaultValue={imageUrl}
-              placeholder="Image URL"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              placeholder="Enter image link"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
@@ -198,12 +216,12 @@ const UpdatePetForm = ({ singlePet }) => {
             name="healthStatus"
             defaultSelectedKey={healthStatus?.toLowerCase()}
           >
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Health Status
             </Label>
-            <Select.Trigger className="rounded-xl h-10 bg-white/5 border-white/10 text-white">
+            <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
               <Select.Value />
-              <Select.Indicator />
+              <Select.Indicator className="mr-2" />
             </Select.Trigger>
             <Select.Popover>
               <ListBox className="bg-[#1A0B40] text-white p-2">
@@ -226,12 +244,12 @@ const UpdatePetForm = ({ singlePet }) => {
             name="vaccinationStatus"
             defaultSelectedKey={vaccinationStatus?.toLowerCase()}
           >
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Vaccination Status
             </Label>
-            <Select.Trigger className="rounded-xl h-10 bg-white/5 border-white/10 text-white">
+            <Select.Trigger className="rounded-xl h-12 bg-white/5 border-white/10 text-white">
               <Select.Value />
-              <Select.Indicator />
+              <Select.Indicator className="mr-2" />
             </Select.Trigger>
             <Select.Popover>
               <ListBox className="bg-[#1A0B40] text-white p-2">
@@ -250,50 +268,51 @@ const UpdatePetForm = ({ singlePet }) => {
           </Select>
 
           {/* Location */}
-          <TextField name="location" defaultValue={location}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <TextField defaultValue={location}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Location
             </Label>
             <Input
+              name="location"
               defaultValue={location}
               placeholder="Enter location"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
           {/* Adoption Fee */}
-          <TextField name="adoptionFee" defaultValue={adoptionFee}>
-            <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <TextField defaultValue={adoptionFee}>
+            <Label className="font-bold text-gray-300 text-sm mb-2 block">
               Adoption Fee (USD)
             </Label>
             <Input
               name="adoptionFee"
-              type="number"
               defaultValue={adoptionFee}
-              placeholder="Enter fee"
-              className="rounded-xl bg-white/5 border-white/10 text-white"
+              type="number"
+              placeholder="50"
+              className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
           </TextField>
 
-          {/* Owner Email */}
-          <div className="sm:col-span-2">
+          {/* Owner Email - READ ONLY */}
+          <div className="md:col-span-2">
             <TextField isReadOnly defaultValue={ownerEmail}>
-              <Label className="font-bold text-gray-500 text-sm mb-1 block">
-                Owner Email (Read Only)
+              <Label className="font-bold text-gray-500 text-sm mb-2 block">
+                Owner Email (Fixed)
               </Label>
               <Input
                 name="ownerEmail"
                 defaultValue={ownerEmail}
                 isReadOnly
-                className="rounded-xl bg-white/5 border-white/10 text-gray-500 cursor-not-allowed"
+                className="rounded-xl h-12 bg-white/5 border-white/10 text-gray-500 cursor-not-allowed"
               />
             </TextField>
           </div>
 
           {/* Description */}
-          <div className="sm:col-span-2">
-            <TextField name="description" defaultValue={description}>
-              <Label className="font-bold text-gray-300 text-sm mb-1 block">
+          <div className="md:col-span-2">
+            <TextField defaultValue={description}>
+              <Label className="font-bold text-gray-300 text-sm mb-2 block">
                 Description
               </Label>
               <TextArea
@@ -309,9 +328,9 @@ const UpdatePetForm = ({ singlePet }) => {
         <Button
           type="submit"
           isLoading={isPending}
-          className="w-full bg-gradient-to-r from-[#C084FC] to-[#E879F9] text-white font-black h-12 rounded-xl shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all text-lg"
+          className="w-full bg-gradient-to-r from-[#C084FC] to-[#E879F9] text-white font-black h-14 rounded-2xl shadow-lg shadow-purple-500/20 hover:opacity-90 transition-all text-lg"
         >
-          {isPending ? 'Updating...' : '🐾 Update Information'}
+          {isPending ? 'Updating...' : '🐾 Save Changes'}
         </Button>
       </form>
     </div>
