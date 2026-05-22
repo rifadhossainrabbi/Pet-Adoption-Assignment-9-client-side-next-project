@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { name: 'All Pets', href: '/all-pets' },
   { name: 'My Requests', href: '/my-requests' },
   { name: 'Add Pet', href: '/add-pet' },
+  { name: 'My List', href: '/my-list' },
 ];
 
 const Navbar = () => {
@@ -66,7 +67,7 @@ const Navbar = () => {
 
           {/* Desktop Nav */}
           <ul className="hidden lg:flex gap-8 items-center">
-            {NAV_LINKS.map(link => (
+            {NAV_LINKS.slice(0, 4).map(link => (
               <li key={link.href}>
                 <MyNavLinks href={link.href}>{link.name}</MyNavLinks>
               </li>
