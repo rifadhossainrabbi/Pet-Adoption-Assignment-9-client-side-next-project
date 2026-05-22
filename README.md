@@ -46,6 +46,7 @@ Optimized for all devices
 🔔 Real-Time Toast Notifications
 React-Hot-Toast added for instant feedback
 (CRUD operations, login, errors)
+
 🛠️ Tech Stack
 Frontend (Next.js 16 – App Router)
 Next.js 16
@@ -62,3 +63,28 @@ Express.js
 MongoDB (Native Driver)
 JWT Auth using jose
 CORS + Dotenv
+
+📦 Packages & Their Purpose
+### Core Framework
+next — React-based full stack framework (SSR, SSG, Routing)
+react / react-dom — UI building & rendering libraries
+### Authentication & Database
+better-auth — Authentication system (login, signup, sessions)
+@better-auth/mongo-adapter — Better Auth ↔ MongoDB connection adapter
+mongodb — MongoDB database driver
+### UI & Components
+@heroui/react — Pre-built modern UI components
+@heroui/styles — HeroUI styling system
+react-icons — Popular icon packs as React components
+framer-motion — Smooth animations & transitions
+react-hot-toast — Toast notifications
+react-spinners — Loading spinners
+### Forms
+react-hook-form — High-performance form handling & validation
+
+### Dev Tools
+tailwindcss — Utility-first CSS framework
+@tailwindcss/postcss — PostCSS setup for Tailwind
+eslint — Linting tool for cleaner code
+eslint-config-next — ESLint rules optimized for Next.js
+babel-plugin-react-compiler — React compiler optimization
