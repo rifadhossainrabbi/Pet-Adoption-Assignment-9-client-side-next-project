@@ -39,7 +39,7 @@ const DashBoardNavbar = () => {
         </nav>
       </div>
 
-      {/* Mobile TOP Navbar */}
+      {/* Mobile top navbar */}
       <div className="lg:hidden fixed top-16 left-0 right-0 z-40 h-16 bg-[#0F0821] border-b border-white/10 flex justify-around items-center px-4">
         {menuItems.map(item => (
           <DashNavLinks key={item.name} item={item} mobile />

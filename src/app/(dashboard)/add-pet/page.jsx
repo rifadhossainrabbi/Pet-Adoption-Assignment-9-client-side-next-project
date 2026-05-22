@@ -292,7 +292,7 @@ const AddPetPage = () => {
               <FieldError />
             </TextField>
 
-            {/* Owner Email (Full Width) */}
+            {/* Owner Email */}
             <div className="md:col-span-2">
               <TextField isReadOnly defaultValue={user?.email}>
                 <Label className="font-bold text-gray-500 text-sm mb-2 block">

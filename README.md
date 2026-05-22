@@ -65,6 +65,7 @@ JWT Auth using jose
 CORS + Dotenv
 
 📦 Packages & Their Purpose
+
 ### Core Framework
 next — React-based full stack framework (SSR, SSG, Routing)
 react / react-dom — UI building & rendering libraries

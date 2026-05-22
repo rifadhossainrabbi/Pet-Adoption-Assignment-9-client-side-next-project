@@ -106,7 +106,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Pet Name
             </Label>
             <Input
-              name="PetName" // এটি যুক্ত করা হয়েছে
+              name="PetName" 
               defaultValue={PetName}
               placeholder="Enter pet name"
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
@@ -115,7 +115,7 @@ const UpdatePetForm = ({ singlePet }) => {
 
           {/* Species */}
           <Select
-            name="species" // এটি যুক্ত করা হয়েছে
+            name="species" 
             defaultSelectedKey={species?.toLowerCase()}
             placeholder="Select species"
           >
@@ -148,7 +148,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Breed
             </Label>
             <Input
-              name="breed" // এটি যুক্ত করা হয়েছে
+              name="breed" 
               defaultValue={breed}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
@@ -160,7 +160,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Age
             </Label>
             <Input
-              name="age" // এটি যুক্ত করা হয়েছে
+              name="age"
               defaultValue={age}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
@@ -201,7 +201,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Image URL
             </Label>
             <Input
-              name="imageUrl" // এটি যুক্ত করা হয়েছে
+              name="imageUrl" 
               defaultValue={imageUrl}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
@@ -269,7 +269,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Location
             </Label>
             <Input
-              name="location" // এটি যুক্ত করা হয়েছে
+              name="location" 
               defaultValue={location}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
             />
@@ -281,7 +281,7 @@ const UpdatePetForm = ({ singlePet }) => {
               Adoption Fee ($)
             </Label>
             <Input
-              name="adoptionFee" // এটি যুক্ত করা হয়েছে
+              name="adoptionFee" 
               type="number"
               defaultValue={adoptionFee}
               className="rounded-xl h-12 bg-white/5 border-white/10 text-white"
@@ -295,7 +295,7 @@ const UpdatePetForm = ({ singlePet }) => {
                 Email (Read Only)
               </Label>
               <Input
-                name="ownerEmail" // এটি যুক্ত করা হয়েছে
+                name="ownerEmail" 
                 defaultValue={ownerEmail}
                 isReadOnly
                 className="rounded-xl h-12 bg-white/5 border-white/10 text-gray-500 cursor-not-allowed"
@@ -310,7 +310,7 @@ const UpdatePetForm = ({ singlePet }) => {
                 Description
               </Label>
               <TextArea
-                name="description" // এটি যুক্ত করা হয়েছে
+                name="description"
                 defaultValue={description}
                 className="rounded-xl bg-white/5 border-white/10 text-white min-h-[120px] p-4"
               />

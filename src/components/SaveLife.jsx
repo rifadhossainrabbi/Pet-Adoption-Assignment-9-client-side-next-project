@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { FaHeart, FaPiggyBank, FaSmile, FaStethoscope } from 'react-icons/fa';
-import { motion } from 'framer-motion'; // Framer Motion ইমপোর্ট
+import { motion } from 'framer-motion'; 
 
 const SaveLife = () => {
   const features = [
@@ -31,7 +31,6 @@ const SaveLife = () => {
     },
   ];
 
-  // অ্যানিমেশন ভ্যারিয়েন্টস
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {

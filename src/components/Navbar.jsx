@@ -47,7 +47,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* HEADER */}
+      {/* header */}
       <nav className="fixed top-0 left-0 w-full z-[100] h-20 bg-[#0F0821]/95 backdrop-blur-md border-b border-white/5">
         <div className="container mx-auto px-4 md:px-12 h-full flex items-center justify-between">
           {/* Logo */}

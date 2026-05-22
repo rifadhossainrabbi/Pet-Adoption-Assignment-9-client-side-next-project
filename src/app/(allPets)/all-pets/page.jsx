@@ -23,7 +23,7 @@ const AllPetsPage = async ({ searchParams }) => {
   return (
     <div className="min-h-screen bg-[#050211] pb-20">
       <div className="container mx-auto px-2 sm:px-4 md:px-12">
-        {/* সার্চ এবং ফিল্টার সেকশন */}
+        {/* search filter section*/}
         <div className="py-6 sm:py-10 flex justify-center">
           <SearchFilterSort />
         </div>

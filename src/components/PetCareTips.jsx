@@ -76,7 +76,7 @@ const PetCareTips = () => {
   return (
     <section className="bg-[#050211] py-16 space-y-12 overflow-hidden">
       <div className="container mx-auto px-4 md:px-12">
-        {/* --- Section 1: Pet Care Tips --- */}
+        {/* pet care tips */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

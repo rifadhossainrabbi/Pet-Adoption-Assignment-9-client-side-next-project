@@ -36,7 +36,7 @@ const DashNavLinks = ({ item, mobile = false }) => {
     );
   }
 
-  // DESKTOP NAV
+  // DESKTOP NAVbar
   return (
     <Link
       href={item.href}
