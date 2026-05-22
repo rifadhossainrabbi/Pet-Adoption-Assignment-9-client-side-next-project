@@ -51,7 +51,7 @@ const LogInPage = () => {
 
   return (
     <div className="min-h-screen bg-[#050211] flex justify-center items-center p-4 relative overflow-hidden">
-      {/* ব্যাকগ্রাউন্ড ডেকোরেশন (ব্যানারের মতো গ্লো) */}
+      {/* background  */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-600/10 blur-[120px] rounded-full"></div>
 

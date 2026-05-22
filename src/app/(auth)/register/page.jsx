@@ -56,7 +56,7 @@ const RegisterPage = () => {
 
   return (
     <div className="min-h-screen bg-[#050211] flex justify-center items-center py-12 px-4 relative overflow-hidden">
-      {/* ব্যাকগ্রাউন্ড ডেকোরেশন গ্লো */}
+      {/* background glow */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-600/10 blur-[120px] rounded-full"></div>
 
@@ -139,10 +139,10 @@ const RegisterPage = () => {
                   placeholder="••••••••"
                   {...register('password', {
                     required: 'Password is required',
-                    minLength: { value: 6, message: 'Min 6 chars' },
+                    minLength: { value: 6, message: 'Min 6 characters' },
                     validate: v =>
                       (/[A-Z]/.test(v) && /[a-z]/.test(v)) ||
-                      'Need Up/Low case',
+                      'At least one uppercase and one lowercase letter',
                   })}
                 />
                 <button
@@ -176,6 +176,7 @@ const RegisterPage = () => {
                   placeholder="••••••••"
                   {...register('confirmPassword', {
                     required: 'Required',
+                    // watch er maddhome sob datar copy rakha ase ekhon confirm password er valu jodi password er value er sathe match kore tobe thik ase noyto No Mathc dibe
                     validate: value => value === password || 'No match',
                   })}
                 />

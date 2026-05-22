@@ -27,9 +27,9 @@ const quickLinks = [
 ];
 
 const contactInfo = [
-  { Icon: FaMapMarkerAlt, text: 'Dhaka, Bangladesh', size: 14 },
-  { Icon: FaPhoneAlt, text: '+880 1234-567890', size: 12 },
-  { Icon: FaEnvelope, text: 'info@petnest.com', size: 14 },
+  { Icon: FaMapMarkerAlt, text: 'Natore, Bangladesh', size: 14 },
+  { Icon: FaPhoneAlt, text: '+880 1516-595530', size: 12 },
+  { Icon: FaEnvelope, text: 'hossainmrrifad@gmail.com', size: 14 },
 ];
 
 const supportLinks = [

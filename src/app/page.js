@@ -16,10 +16,10 @@ export default function Home() {
       <div className="pt-20">
         <Banner />
         <FeaturedPets />
-        <SaveLife />
         <WhyAdoptPage />
         <SuccessStory />
         <PetCareTips />
+        <SaveLife />
         <Footer />
       </div>
     </>

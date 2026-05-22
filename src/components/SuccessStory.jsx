@@ -8,7 +8,7 @@ const stories = [
   {
     id: 1,
     userName: 'Ariful Islam',
-    petName: 'Milo (Cat)',
+    petName: 'Max (Cat)',
     image:
       'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?q=80&w=2043&auto=format&fit=crop',
     text: 'Milo has brought so much joy to our home. The adoption process was incredibly smooth and transparent!',
@@ -17,7 +17,7 @@ const stories = [
   {
     id: 2,
     userName: 'Sarah Rahman',
-    petName: 'Bruno (Golden Retriever)',
+    petName: 'Bolt (Golden Retriever)',
     image:
       'https://images.unsplash.com/photo-1552053831-71594a27632d?q=80&w=1924&auto=format&fit=crop',
     text: "Adopting Bruno was the best decision of my life. He's my best friend now. Thank you PetNest!",
@@ -26,7 +26,7 @@ const stories = [
   {
     id: 3,
     userName: 'Tanvir Ahmed',
-    petName: 'Luna (Rabbit)',
+    petName: 'Rex (Rabbit)',
     image:
       'https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?q=80&w=1887&auto=format&fit=crop',
     text: 'Finding Luna through this platform was easy. She is healthy and very happy in her new environment.',

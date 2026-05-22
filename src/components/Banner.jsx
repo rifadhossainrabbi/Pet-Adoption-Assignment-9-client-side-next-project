@@ -29,7 +29,7 @@ const Banner = () => {
     <section className="relative w-full bg-[#0F0821] overflow-hidden min-h-[600px] sm:min-h-[700px] lg:min-h-[850px] flex items-center">
       {/*background animation */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0F0821] via-[#1A0B40] to-[#3D1472]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0f082147] via-[#1a0b4060] to-[#4d1991]"></div>
 
         {/* glow effects */}
         <motion.div
@@ -101,6 +101,7 @@ const Banner = () => {
                 </motion.button>
               </Link>
 
+              {/* How it works */}
               <motion.button
                 whileHover={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
                 className="w-full sm:w-auto group flex items-center justify-center gap-3 text-white font-bold text-lg px-8 py-5 rounded-2xl border border-white/20 transition-all"
@@ -111,7 +112,7 @@ const Banner = () => {
             </motion.div>
           </motion.div>
 
-          {/* ৩. right side pet */}
+          {/* right side pet */}
           <div className="w-full lg:w-1/2 order-1 lg:order-2 flex justify-center lg:justify-end relative">
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -122,7 +123,7 @@ const Banner = () => {
               {/* effect */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/30 via-pink-500/20 to-orange-500/10 blur-2xl rounded-3xl scale-110"></div>
 
-              {/* main card */}
+              {/* main pet card */}
               <div className="relative rounded-3xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-sm shadow-2xl shadow-black/50 leading-[0]">
                 {/* pet image */}
                 <Image
@@ -133,6 +134,7 @@ const Banner = () => {
                   className="relative z-10 w-full h-auto object-contain px-4 pt-6 object-bottom" 
                   priority
                 />
+                {/* pet card gradient background */}
                 <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#1A0B40]/60 to-transparent z-20"></div>
               </div>
 
@@ -172,7 +174,7 @@ const Banner = () => {
                 </div>
               </motion.div>
 
-              {/* floatin heart icon  */}
+              {/* floatin heart icon for pet card left side  */}
               <motion.div
                 animate={{ scale: [1, 1.2, 1], opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -181,7 +183,7 @@ const Banner = () => {
                 <span className="text-xl sm:text-2xl">❤️</span>
               </motion.div>
 
-              {/* floatin paw */}
+              {/* floatin paw for pet card top right  */}
               <motion.div
                 animate={{ rotate: [0, 10, -10, 0] }}
                 transition={{ duration: 5, repeat: Infinity }}
