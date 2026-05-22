@@ -13,13 +13,15 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <Banner />
-      <FeaturedPets />
-      <SaveLife />
-      <WhyAdoptPage />
-      <SuccessStory/>
-      <PetCareTips />
-      <Footer />
+      <div className="pt-20">
+        <Banner />
+        <FeaturedPets />
+        <SaveLife />
+        <WhyAdoptPage />
+        <SuccessStory />
+        <PetCareTips />
+        <Footer />
+      </div>
     </>
   );
 }
